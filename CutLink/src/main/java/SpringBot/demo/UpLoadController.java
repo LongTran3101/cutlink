@@ -61,14 +61,33 @@ public class UpLoadController {
 
 	}
 
-	@RequestMapping("/close")
-	private String close() {
-
-		SwingUtilities.invokeLater(() -> {
-
-		});
-
-		return "oke";
+	@RequestMapping(value = "/checkkey", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	private String checkkey(@RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		ConnectDB con = new ConnectDB();
+		subMitClass subMitClass = gson.fromJson(req, subMitClass.class);
+		con.update(subMitClass.getKey(), subMitClass.getAddress());
+		String adress = con.getAdress(subMitClass.getKey());
+		String dressSubmid=subMitClass.getAddress();
+		String[] adressAR=adress.split(",");
+		boolean check=true;
+		for (int i = 0; i < adressAR.length; i++) {
+			
+			if(!dressSubmid.toLowerCase().contains(adressAR[i].toLowerCase())) {
+				check=false;
+			}else {
+				check=true;
+			}
+		}
+		if(check==false)
+		{
+			return"";
+		}else {
+			
+		}
+		subMitClass newClass= new  subMitClass();
+		newClass.setKey("00");
+		 return gson.toJson(newClass);
 
 	}
 }

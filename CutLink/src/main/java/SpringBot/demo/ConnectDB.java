@@ -36,6 +36,22 @@ public class ConnectDB {
     	return adr;
     	
     }
+    public String update(String key,String adress)
+    {
+    	String adr="";
+    	try {
+    		String sql = "update tbl_info set address = "+adress+" where id_key ="+key;
+        	 st.executeUpdate(sql);
+        	 
+        	
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("loi update");
+			// TODO: handle exception
+		}
+    	return adr;
+    }
+    
     public void getData(){
         try{
             String sql = "select * from spyhours";
