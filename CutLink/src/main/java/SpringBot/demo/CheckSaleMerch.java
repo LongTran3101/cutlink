@@ -1,6 +1,8 @@
 package SpringBot.demo;
 
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -41,9 +44,13 @@ public class CheckSaleMerch {
 	private String test( @RequestBody String req,HttpServletRequest request, HttpServletResponse resp) {
 		try {
 			//Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-			AccountMerch mech=gson.fromJson(req,AccountMerch.class);
+			ObjectMapper objectMapper = new ObjectMapper();
+			AccountMerch mech=objectMapper.readValue(req, AccountMerch.class);
+
+			/*Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+			AccountMerch mech=gson.fromJson(req,AccountMerch.class);*/
 			System.out.println("a");
+			System.out.println(mech.getDay());
 			String profile=mech.getPath();
 			int b = profile.lastIndexOf("\\");
 			System.out.println(b);
@@ -72,14 +79,21 @@ public class CheckSaleMerch {
 			String todaySale =driver.findElement(By.cssSelector(".odometer-value")).getText();
 			String todayMoney= driver.findElement(By.cssSelector(".royalties .number")).getText();
 			String yesterdayMoney= driver.findElement(By.cssSelector(".yesterday .number")).getText();
+			String day= driver.findElement(By.cssSelector(".today .subtitle")).getText();
 			System.out.println(yesterdaySale);
 			System.out.println(yesterdayMoney);
 			System.out.println(todaySale);
 			System.out.println(todayMoney);
+			DateFormat df = new SimpleDateFormat("MM/dd/yy"); 
+			DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd"); 
+			mech.setDayString(df2.format(df.parse(day)));
+			mech.setDay(df.parse(day));
 			mech.setSale(Integer.parseInt(todaySale));
 			mech.setMoney(Double.parseDouble(todayMoney));
+			
 			CallAPi callApi =new CallAPi();
-			String rep =callApi.callAPIPost("http://80.240.23.82:8080/saveCheckSale", req);
+			String jsonString = objectMapper.writeValueAsString(mech);
+			String rep =callApi.callAPIPost("http://80.240.28.138:8080/saveCheckSale", jsonString);
 			if(rep!=null && rep.equalsIgnoreCase("00"))
 			{
 				return "00";

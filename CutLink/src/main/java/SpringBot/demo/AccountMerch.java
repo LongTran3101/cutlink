@@ -48,8 +48,17 @@ public class AccountMerch  {
     private double money;
     
     private String email;
+    private Date day;
 
-    public AccountMerch() {
+    public Date getDay() {
+		return day;
+	}
+
+	public void setDay(Date day) {
+		this.day = day;
+	}
+
+	public AccountMerch() {
     }
 
     public AccountMerch(Integer id) {
