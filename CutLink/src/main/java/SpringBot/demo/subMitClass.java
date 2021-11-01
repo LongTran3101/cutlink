@@ -11,7 +11,7 @@ public class subMitClass {
 	}
 	public void setKey(String key) {
 		this.key = key;
-	}
+	} 
 	
 	
 	public String getAddress() {

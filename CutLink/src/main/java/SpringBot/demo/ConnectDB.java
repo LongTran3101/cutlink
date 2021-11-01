@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 public class ConnectDB {
     private Connection con;
-    public Connection getCon() {
+    public Connection getCon() { 
 		return con;
 	}
 

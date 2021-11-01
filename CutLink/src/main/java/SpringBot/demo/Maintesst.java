@@ -18,7 +18,7 @@ public class Maintesst {
 			int b = profile.lastIndexOf("\\");
 			System.out.println(b);
 			String nameProfile=profile.substring(b+1);
-			String urlDataur=profile.substring(0, b+1);
+			String urlDataur=profile.substring(0, b+1); 
 			System.out.println(nameProfile);
 			System.out.println(urlDataur);
 			WebDriverManager.chromedriver().setup();

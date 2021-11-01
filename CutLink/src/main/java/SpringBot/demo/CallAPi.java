@@ -16,7 +16,7 @@ import org.apache.http.util.EntityUtils;
 
 public class CallAPi {
 
-	//private static CallAPI2 instance = null;
+	//private static CallAPI2 instance = null; 
 	private static final int CONNECTION_TIMEOUT_MS = 600000;
 	private static final int LATENT_CONNECTION_TIMEOUT_MS = 60000000;
 	public static String FINALTOKEN = "";

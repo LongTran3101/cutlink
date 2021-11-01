@@ -30,7 +30,7 @@ public class UpLoadController {
 
 		subMitClass subMitClass = gson.fromJson(req, subMitClass.class);
 
-		String adress = con.getAdress(subMitClass.getKey());
+		String adress = con.getAdress(subMitClass.getKey()); 
 		String dressSubmid = subMitClass.getAddress();
 		String[] adressAR = adress.split(",");
 		boolean check = true;

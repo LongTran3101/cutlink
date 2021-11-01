@@ -16,7 +16,7 @@ public class DemoApplication {
 		System.setProperty("java.awt.headless", "false");
 //		SwingUtilities.invokeLater(() -> {
 //		    UpLoad f =new UpLoad();
-//		    f.setVisible(true);
+//		    f.setVisible(true); 
 //		});
 	}
 

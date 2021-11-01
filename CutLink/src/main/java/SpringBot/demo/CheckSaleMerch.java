@@ -60,7 +60,7 @@ public class CheckSaleMerch {
 	        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
 	        //options.addArguments("disable-extensions");
 	        options.addArguments("--no-sandbox");
-	        options.addArguments("start-maximized");
+	        options.addArguments("start-maximized"); 
 	        //options.AddExcludedArgument("enable-automation");
 	        //options.AddAdditionalCapability("useAutomationExtension", false);
 			 driver= new ChromeDriver(options);

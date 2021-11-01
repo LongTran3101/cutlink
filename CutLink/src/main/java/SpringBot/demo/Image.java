@@ -18,7 +18,7 @@ public class Image {
     }
       public Image() {
        
-    }
+    } 
     
     String name;
     String url;

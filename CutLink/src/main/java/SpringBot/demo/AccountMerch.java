@@ -61,7 +61,7 @@ public class AccountMerch  {
         this.name = name;
         this.ip = ip;
         this.dayString = dayString;
-        this.sale = sale;
+        this.sale = sale; 
         this.money = money;
         this.email = email;
     }
