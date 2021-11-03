@@ -72,6 +72,7 @@ public class CheckSaleMerch {
 	        //options.AddAdditionalCapability("useAutomationExtension", false);
 			 driver= new ChromeDriver(options);
 			driver.get("https://merch.amazon.com/dashboard");
+			Thread.sleep(10000);
 			WebDriverWait wait = new WebDriverWait(driver, 20);
 			 wait.until(ExpectedConditions
 						.visibilityOfElementLocated(By.cssSelector(".yesterday")));
