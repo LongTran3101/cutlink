@@ -113,7 +113,7 @@ public class CheckSaleMerch {
 			sale.setSale(Integer.parseInt(todaySale));
 			sale.setMoney(Double.parseDouble(todayMoney));
 			sale.setEmail(mech.getEmail());
-			sale.setId(mech.getId());
+			//sale.setId(mech.getId());
 			sale.setIp(mech.getIp());
 			sale.setMoneyyesterday((Double.parseDouble(yesterdayMoney)));
 			sale.setName(mech.getName());
@@ -122,7 +122,7 @@ public class CheckSaleMerch {
 			sale.setYesterday(Integer.parseInt(yesterdaySale));
 			CallAPi callApi =new CallAPi();
 			String jsonString = objectMapper.writeValueAsString(sale);
-			String rep =callApi.callAPIPost("http://80.240.28.138:8080/saveCheckSale", jsonString);
+			String rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
 			if(rep!=null && rep.equalsIgnoreCase("00"))
 			{
 				return "00";
