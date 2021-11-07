@@ -118,6 +118,7 @@ public class CheckSaleMerch {
 			sale.setMoneyyesterday((Double.parseDouble(yesterdayMoney)));
 			sale.setName(mech.getName());
 			sale.setPath(mech.getPath());
+			sale.setUsername(mech.getUsername());
 			sale.setYesterday(Integer.parseInt(yesterdaySale));
 			CallAPi callApi =new CallAPi();
 			String jsonString = objectMapper.writeValueAsString(sale);
