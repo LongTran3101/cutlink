@@ -42,6 +42,8 @@ public class CheckSaleMerch {
 	}
 	@RequestMapping(value = "/checksalemerchtest", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	private String test( @RequestBody String req,HttpServletRequest request, HttpServletResponse resp) {
+		
+		String rep ="";
 		try {
 			//Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -122,19 +124,25 @@ public class CheckSaleMerch {
 			sale.setYesterday(Integer.parseInt(yesterdaySale));
 			CallAPi callApi =new CallAPi();
 			String jsonString = objectMapper.writeValueAsString(sale);
-			String rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
-			if(rep!=null && rep.equalsIgnoreCase("00"))
-			{
-				return "00";
-			}
+			 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			if(driver!=null)
 			{
-				driver.quit();
-				driver.close();
+				try {
+					driver.quit();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+				
+				//driver.close();
 			}
+		}
+		if(rep!=null && rep.equalsIgnoreCase("00"))
+		{
+			return "00";
 		}
 		
 		return "01";
