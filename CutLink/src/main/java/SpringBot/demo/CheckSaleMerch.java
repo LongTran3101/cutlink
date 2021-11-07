@@ -80,6 +80,16 @@ public class CheckSaleMerch {
 			String todaySale =driver.findElement(By.cssSelector(".odometer-value")).getText();
 			String todayMoney= driver.findElement(By.cssSelector(".royalties .number")).getText();
 			String yesterdayMoney= driver.findElement(By.cssSelector(".yesterday .number")).getText();
+			String tier=driver.findElement(By.cssSelector(".tier-text .number")).getText();
+			String coutDesgin=driver.findElement(By.cssSelector(".published-designs .used")).getText();
+			String last7dayMoney= driver.findElement(By.cssSelector(".last-seven-days .number")).getText();
+			String last7daySale =driver.findElement(By.cssSelector(".last-seven-days .net-sales")).getText();
+			String thismonthMoney= driver.findElement(By.cssSelector(".this-month .number")).getText();
+			String thismonthSale =driver.findElement(By.cssSelector(".this-month .net-sales")).getText();
+			String previousmonthMoney= driver.findElement(By.cssSelector(".previous-month .number")).getText();
+			String previousmonthSale =driver.findElement(By.cssSelector(".previous-month .net-sales")).getText();
+			String alltimeMoney= driver.findElement(By.cssSelector(".all-time .number")).getText();
+			String alltimeSale =driver.findElement(By.cssSelector(".all-time .net-sales")).getText();
 			String day= driver.findElement(By.cssSelector(".today .subtitle")).getText();
 			System.out.println(yesterdaySale);
 			System.out.println(yesterdayMoney);
@@ -87,13 +97,30 @@ public class CheckSaleMerch {
 			System.out.println(todayMoney);
 			DateFormat df = new SimpleDateFormat("MM/dd/yy"); 
 			DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd"); 
-			mech.setDayString(df2.format(df.parse(day)));
-			mech.setDay(df.parse(day));
-			mech.setSale(Integer.parseInt(todaySale));
-			mech.setMoney(Double.parseDouble(todayMoney));
-			
+			SaleMerch sale=new SaleMerch();
+			sale.setTier(tier);
+			sale.setCoutDesgin(Integer.parseInt(coutDesgin));
+			sale.setLast7dayMoney(Double.parseDouble(last7dayMoney));
+			sale.setThismonthMoney(Double.parseDouble(thismonthMoney));
+			sale.setPreviousmonthMoney(Double.parseDouble(previousmonthMoney));
+			sale.setAlltimeMoney(Double.parseDouble(alltimeMoney));
+			sale.setLast7daySale(Integer.parseInt(last7daySale));
+			sale.setThismonthSale(Integer.parseInt(thismonthSale));
+			sale.setPreviousmonthSale(Integer.parseInt(previousmonthSale));
+			sale.setAlltimeSale(Integer.parseInt(alltimeSale));
+			sale.setDayString(df2.format(df.parse(day)));
+			sale.setDay(df.parse(day));
+			sale.setSale(Integer.parseInt(todaySale));
+			sale.setMoney(Double.parseDouble(todayMoney));
+			sale.setEmail(mech.getEmail());
+			sale.setId(mech.getId());
+			sale.setIp(mech.getIp());
+			sale.setMoneyyesterday((Double.parseDouble(yesterdayMoney)));
+			sale.setName(mech.getName());
+			sale.setPath(mech.getPath());
+			sale.setYesterday(Integer.parseInt(yesterdaySale));
 			CallAPi callApi =new CallAPi();
-			String jsonString = objectMapper.writeValueAsString(mech);
+			String jsonString = objectMapper.writeValueAsString(sale);
 			String rep =callApi.callAPIPost("http://80.240.28.138:8080/saveCheckSale", jsonString);
 			if(rep!=null && rep.equalsIgnoreCase("00"))
 			{
