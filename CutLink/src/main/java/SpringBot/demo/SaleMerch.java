@@ -8,6 +8,7 @@ package SpringBot.demo;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -37,11 +38,20 @@ public class SaleMerch  {
     private int previousmonthSale ;
     private double alltimeMoney;
     private int alltimeSale;
+    private List<ImageMerch> LstimageMerch;
 
    
 
     
-    public String getTier() {
+    public List<ImageMerch> getLstimageMerch() {
+		return LstimageMerch;
+	}
+
+	public void setLstimageMerch(List<ImageMerch> imageMerch) {
+		this.LstimageMerch = imageMerch;
+	}
+
+	public String getTier() {
 		return tier;
 	}
 

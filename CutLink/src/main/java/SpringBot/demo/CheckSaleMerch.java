@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -122,6 +123,20 @@ public class CheckSaleMerch {
 			sale.setPath(mech.getPath());
 			sale.setUsername(mech.getUsername());
 			sale.setYesterday(Integer.parseInt(yesterdaySale));
+			try {
+				List<ImageMerch> lst=new ArrayList<>();
+				 List<WebElement> listelement = driver.findElements(By.cssSelector(".todays-shirts-list a"));
+				 for (WebElement webElement : listelement) {
+					 ImageMerch a=new ImageMerch();
+					 a.setName(webElement.getAttribute("title"));
+					 a.setUrl(webElement.getAttribute("href"));
+					 lst.add(a);
+				}
+				 sale.setLstimageMerch(lst);
+				 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			CallAPi callApi =new CallAPi();
 			String jsonString = objectMapper.writeValueAsString(sale);
 			 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
