@@ -7,6 +7,7 @@ public class ImageMerch {
 	private String name;
 	private String url;
 	private Date day;
+	private String acc;
 	public Integer getId() {
 		return id;
 	}
@@ -30,6 +31,12 @@ public class ImageMerch {
 	}
 	public void setDay(Date day) {
 		this.day = day;
+	}
+	public String getAcc() {
+		return acc;
+	}
+	public void setAcc(String acc) {
+		this.acc = acc;
 	}
 	
 	

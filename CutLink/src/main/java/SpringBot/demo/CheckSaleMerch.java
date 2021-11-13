@@ -130,6 +130,7 @@ public class CheckSaleMerch {
 					 ImageMerch a=new ImageMerch();
 					 a.setName(webElement.getAttribute("title"));
 					 a.setUrl(webElement.getAttribute("href"));
+					 a.setAcc(mech.getName());
 					 lst.add(a);
 				}
 				 sale.setLstimageMerch(lst);
