@@ -32,6 +32,7 @@ public class Scheduler {
 			String rep ="";
 			 rep =callApi.callAPIPost("http://45.32.101.196:8080/getallaccfromip", "");
 			 List<AccountMerch> mechlst = objectMapper.readValue(rep, new TypeReference<List<AccountMerch>>(){});
+			System.out.println(mechlst.size());
 			 for (AccountMerch mech : mechlst) {
 				 try {
 						//Gson gson = new GsonBuilder().setPrettyPrinting().create();
