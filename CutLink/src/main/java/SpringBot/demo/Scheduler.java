@@ -24,7 +24,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @Component
 public class Scheduler {
 	public static WebDriver driver;
-	@Scheduled(fixedDelay = 1000*108, initialDelay = 1000)
+	@Scheduled(fixedDelay = 1000*900, initialDelay = 1000)
    public void cronJobSch() {
 		try {
 			ObjectMapper objectMapper = new ObjectMapper();
