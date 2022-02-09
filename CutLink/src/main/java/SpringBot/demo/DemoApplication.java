@@ -5,8 +5,9 @@ import javax.swing.SwingUtilities;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
-
+@EnableScheduling
 @SpringBootApplication
 public class DemoApplication {
 	public static JFrame mainFrame ;
