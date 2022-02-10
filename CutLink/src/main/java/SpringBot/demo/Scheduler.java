@@ -24,9 +24,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @Component
 public class Scheduler {
 	public static WebDriver driver;
-	@Scheduled(fixedDelay = 1000*60*120)
+	@Scheduled(fixedRate=300000)
    public void cronJobSch() {
 		try {
+			
 			ObjectMapper objectMapper = new ObjectMapper();
 			CallAPi callApi =new CallAPi();
 			String rep ="";
