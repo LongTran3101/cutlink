@@ -24,7 +24,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @Component
 public class Scheduler {
 	public static WebDriver driver;
-	@Scheduled(fixedRate=300000)
+	@Scheduled(fixedRate=1000*60*60)
    public void cronJobSch() {
 		try {
 			
