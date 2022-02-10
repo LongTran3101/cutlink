@@ -56,8 +56,10 @@ public class Scheduler {
 						options.addArguments("--profile-directory="+nameProfile);
 				        options.addArguments("--disable-notifications");
 				        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
+				        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36");
 				        //options.addArguments("disable-extensions");
 				        options.addArguments("--no-sandbox");
+				       
 				        options.addArguments("start-maximized"); 
 				        //options.AddExcludedArgument("enable-automation");
 				        //options.AddAdditionalCapability("useAutomationExtension", false);
