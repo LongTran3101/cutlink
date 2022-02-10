@@ -24,7 +24,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @Component
 public class Scheduler {
 	public static WebDriver driver;
-	@Scheduled(fixedRate=1000*60*5)
+	@Scheduled(fixedRate=1000*60*180)
    public void cronJobSch() {
 		try {
 			
@@ -133,7 +133,10 @@ public class Scheduler {
 						 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
 						
 					} catch (Exception e) {
-						e.printStackTrace();
+						System.out.println("loi");
+						continue;
+						//e.printStackTrace();
+						
 					}finally {
 						if(driver!=null)
 						{
