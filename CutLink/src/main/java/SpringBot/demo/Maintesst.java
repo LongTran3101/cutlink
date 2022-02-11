@@ -24,7 +24,7 @@ public class Maintesst {
 			AccountMerch mech=gson.fromJson(req,AccountMerch.class);*/
 			System.out.println("a");
 			//System.out.println(mech.getDay());
-			String profile="C:\\Users\\haile0879\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1";
+			String profile="C:\\Users\\longhuong\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1";
 			int b = profile.lastIndexOf("\\");
 			System.out.println(b);
 			String nameProfile=profile.substring(b+1);
@@ -40,42 +40,13 @@ public class Maintesst {
 	        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
 	        //options.addArguments("disable-extensions");
 	        options.addArguments("--no-sandbox");
+	        options.addArguments("--disable-web-security");
+	        options.addArguments("--disable-blink-features=AutomationControlled");
 	        options.addArguments("start-maximized"); 
 	        //options.AddExcludedArgument("enable-automation");
 	        //options.AddAdditionalCapability("useAutomationExtension", false);
 			 driver= new ChromeDriver(options);
-			driver.get("https://merch.amazon.com/dashboard");
-			WebDriverWait wait = new WebDriverWait(driver, 20);
-			 wait.until(ExpectedConditions
-						.visibilityOfElementLocated(By.cssSelector(".yesterday")));
-			String yesterdaySale =driver.findElement(By.cssSelector(".yesterday .net-sales")).getText();
-			String todaySale =driver.findElement(By.cssSelector(".odometer-value")).getText();
-			String todayMoney= driver.findElement(By.cssSelector(".royalties .number")).getText();
-			String yesterdayMoney= driver.findElement(By.cssSelector(".yesterday .number")).getText();
-			String day= driver.findElement(By.cssSelector(".today .subtitle")).getText();
-			System.out.println(yesterdaySale);
-			System.out.println(yesterdayMoney);
-			System.out.println(todaySale);
-			System.out.println(todayMoney);
-			DateFormat df = new SimpleDateFormat("MM/dd/yy"); 
-			DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd"); 
-			AccountMerch mech=new AccountMerch();
-			mech.setEmail("long.tn3101@gmail.com");
-			mech.setIp("192.16");
-			mech.setName("Merch 17");
-			mech.setPath("path");
-			mech.setDayString(df2.format(df.parse(day)));
-			mech.setDay(df.parse(day));
-			mech.setSale(Integer.parseInt(todaySale));
-			mech.setMoney(Double.parseDouble(todayMoney));
 			
-			CallAPi callApi =new CallAPi();
-			String jsonString = objectMapper.writeValueAsString(mech);
-			String rep =callApi.callAPIPost("http://80.240.28.138:8080/saveCheckSale", jsonString);
-			if(rep!=null && rep.equalsIgnoreCase("00"))
-			{
-				
-			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
