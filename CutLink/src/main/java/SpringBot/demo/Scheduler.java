@@ -26,7 +26,7 @@ public class Scheduler {
 	public static WebDriver driver;
 	@Scheduled(fixedRate=1000*60*180)
    public void cronJobSch() {
-		try {
+		try { 
 			
 			ObjectMapper objectMapper = new ObjectMapper();
 			CallAPi callApi =new CallAPi();
