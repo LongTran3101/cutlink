@@ -123,6 +123,7 @@ public class CheckSaleMerch {
 			sale.setPath(mech.getPath());
 			sale.setUsername(mech.getUsername());
 			sale.setYesterday(Integer.parseInt(yesterdaySale));
+			sale.setStatus("1");
 			try {
 				List<ImageMerch> lst=new ArrayList<>();
 				 List<WebElement> listelement = driver.findElements(By.cssSelector(".todays-shirts-list a"));
@@ -143,7 +144,8 @@ public class CheckSaleMerch {
 			 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println("loi");
+			//e.printStackTrace();
 		}finally {
 			if(driver!=null)
 			{

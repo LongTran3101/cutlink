@@ -38,7 +38,16 @@ public class SaleMerch  {
     private int previousmonthSale ;
     private double alltimeMoney;
     private int alltimeSale;
-    private List<ImageMerch> LstimageMerch;
+    private String status ;
+    public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	private List<ImageMerch> LstimageMerch;
 
    
 

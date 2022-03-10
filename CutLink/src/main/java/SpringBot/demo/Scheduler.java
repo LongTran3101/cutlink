@@ -114,6 +114,7 @@ public class Scheduler {
 						sale.setPath(mech.getPath());
 						sale.setUsername(mech.getUsername());
 						sale.setYesterday(Integer.parseInt(yesterdaySale));
+						sale.setStatus("1");
 						try {
 							List<ImageMerch> lst=new ArrayList<>();
 							 List<WebElement> listelement = driver.findElements(By.cssSelector(".todays-shirts-list a"));
@@ -134,6 +135,36 @@ public class Scheduler {
 						 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
 						
 					} catch (Exception e) {
+						
+						DateFormat df = new SimpleDateFormat("MM/dd/yy"); 
+						DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd"); 
+						SaleMerch sale=new SaleMerch();
+						sale.setTier("");
+						sale.setCoutDesgin(0);
+						sale.setLast7dayMoney(new Double("0"));
+						sale.setThismonthMoney(new Double("0"));
+						sale.setPreviousmonthMoney(new Double("0"));
+						sale.setAlltimeMoney(new Double("0"));
+						sale.setLast7daySale(0);
+						sale.setThismonthSale(0);
+						sale.setPreviousmonthSale(0);
+						sale.setAlltimeSale(0);
+						sale.setDayString(df2.format(new Date()));
+						sale.setDay(new Date());
+						sale.setSale(0);
+						sale.setMoney(0);
+						sale.setEmail(mech.getEmail());
+						//sale.setId(mech.getId());
+						sale.setIp(mech.getIp());
+						sale.setMoneyyesterday(new Double("0"));
+						sale.setName(mech.getName());
+						sale.setPath(mech.getPath());
+						sale.setUsername(mech.getUsername());
+						sale.setYesterday(0);
+						sale.setStatus("0");
+						String jsonString = objectMapper.writeValueAsString(sale);
+						 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
+						
 						System.out.println("loi");
 						continue;
 						//e.printStackTrace();
