@@ -1,5 +1,10 @@
 package SpringBot.demo;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -35,12 +40,39 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 @RestController
 public class CheckSaleMerch {
 	public static WebDriver driver;
-	@RequestMapping(value = "/checksalemerch", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	private String hello( HttpServletRequest request, HttpServletResponse resp) {
-		System.out.println("a");
+	@RequestMapping(value = "/uploadMerch", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	private String hello( @RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
+		try {
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			uploadFile mech=objectMapper.readValue(req, uploadFile.class);
+			String link = "http://45.32.101.196:8080/download2?username="+ mech.getUsername() + "&imagename="+mech.getName();
+			URL url = new URL(link);
+	          InputStream in = new BufferedInputStream(url.openStream());
+	          ByteArrayOutputStream out = new ByteArrayOutputStream();
+	          byte[] buf = new byte[1024];
+	          int n = 0;
+	          while (-1 != (n = in.read(buf))) {
+	              out.write(buf, 0, n);
+	          }
+	          out.close();
+	          in.close();
+	          byte[] response = out.toByteArray();
+	          String home = System.getProperty("user.home");
+	          //File file = new File(home+"/Downloads/" + fileName + ".txt"); 
+	          FileOutputStream fos = new FileOutputStream(home+"/Downloads/" +mech.getName());
+	          fos.write(response);
+	          fos.close();
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		  
 		return "ok";
 
 	}
+	
+	
+	
 	@RequestMapping(value = "/checksalemerchtest", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	private String test( @RequestBody String req,HttpServletRequest request, HttpServletResponse resp) {
 		
