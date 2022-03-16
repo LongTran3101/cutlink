@@ -48,7 +48,7 @@ public class CheckSaleMerch {
 			
 			ObjectMapper objectMapper = new ObjectMapper();
 			uploadFile mech=objectMapper.readValue(req, uploadFile.class);
-			String link = "http://45.32.101.196:8080/download2?username="+ mech.getUsername() + "&imagename="+mech.getName();
+			String link = "http://45.32.101.196:8080/download2?username="+ mech.getUsername()+ "&imagename="+mech.getName().replaceAll(" ", "%20");
 			URL url = new URL(link);
 	          InputStream in = new BufferedInputStream(url.openStream());
 	          ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -67,6 +67,7 @@ public class CheckSaleMerch {
 	          fos.close();
 		} catch (Exception e) {
 			// TODO: handle exception
+			e.printStackTrace();
 			return "notok";
 		}
 		  
