@@ -2,6 +2,7 @@ package SpringBot.demo;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -65,6 +67,98 @@ public class CheckSaleMerch {
 	          fos.close();
 		} catch (Exception e) {
 			// TODO: handle exception
+			return "notok";
+		}
+		  
+		return "ok";
+
+	}
+	
+	@RequestMapping(value = "/uploadMerchMulti", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	private String uploadMulti( @RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
+		try {
+			WebDriverManager.chromedriver().setup();
+			ObjectMapper objectMapper = new ObjectMapper();
+			List<uploadFile> mechlst = objectMapper.readValue(req, new TypeReference<List<uploadFile>>(){});
+			String pathProfile="";
+		
+				for (uploadFile mech : mechlst) {
+					try {
+						//System.out.println("a");
+						//System.out.println(mech.getDay());
+						if(mech.getProfile().equalsIgnoreCase(pathProfile)) {
+							pathProfile=mech.getProfile();
+							driver.close();
+							String profile=mech.getProfile();
+							int b = profile.lastIndexOf("\\");
+							//System.out.println(b);
+							String nameProfile=profile.substring(b+1);
+							String urlDataur=profile.substring(0, b+1);
+							//System.out.println(nameProfile);
+							//System.out.println(urlDataur);
+							
+							ChromeOptions options = new ChromeOptions();
+							
+							options.addArguments("--user-data-dir="+urlDataur);
+							options.addArguments("--profile-directory="+nameProfile);
+					        options.addArguments("--disable-notifications");
+					        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
+					        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36");
+					        options.addArguments("--no-sandbox");
+					        options.addArguments("start-maximized"); 
+					        options.addArguments("--no-sandbox");
+					        options.addArguments("--disable-web-security");
+					        options.addArguments("--disable-blink-features=AutomationControlled");
+					        options.addArguments("start-maximized"); 
+					        //options.AddExcludedArgument("enable-automation");
+					        //options.AddAdditionalCapability("useAutomationExtension", false);
+							 driver= new ChromeDriver(options);
+							
+						}
+						
+						
+						
+						 driver.get("https://merch.amazon.com/dashboard");
+						 
+						 Thread.sleep(20000);
+						 driver.get("https://merch.amazon.com/designs/new");
+						 Thread.sleep(10000);
+						 driver.findElement(By.cssSelector("#select-marketplace-button")).click();
+						 Thread.sleep(2000);
+						 driver.findElement(By.cssSelector("#select-none")).click();
+						 Thread.sleep(1000);
+						 driver.findElement(By.cssSelector("#select-none")).click();
+						 Thread.sleep(1000);
+						 driver.findElement(By.cssSelector(".STANDARD_TSHIRT-US input")).click();
+						 Thread.sleep(1000);
+						 driver.findElement(By.cssSelector(".btn-submit")).click();
+						 String home = System.getProperty("user.home");
+							File f = new File(home+"/Downloads/" +mech.getName());
+							if (f.exists() && !f.isDirectory()) {
+
+							} else {
+
+								
+								continue;
+							}
+							
+							WebElement elem = driver.findElement(By.cssSelector("#STANDARD_TSHIRT-FRONT"));
+							
+							elem.sendKeys(home+"/Downloads/" +mech.getName());
+							
+				          
+						
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+					}
+				
+				
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			return "notok";
 		}
 		  
 		return "ok";

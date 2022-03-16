@@ -1,20 +1,53 @@
 package SpringBot.demo;
 
+import java.util.Date;
+
 public class uploadFile {
-	  String name;
-	  String username;
-	  String tile;
-	  String brand;
-	  String des1;
-	  String des2;
-	  String mau;
-	  String profile;
-	  
-	public String getTile() {
-		return tile;
+	private Integer id; 
+	private String name;
+	private  String username;
+	private  String status;
+	private  String title;
+	private  String brand;
+	private  String des1;
+	private String des2;
+	private String mau;
+	private String profile;
+	private String typeTshirt;
+	private Integer idAccount;
+	//private Integer idImage;
+	private String ip;
+	private Date day;
+	private String nameAccount;
+	public Integer getId() {
+		return id;
 	}
-	public void setTile(String tile) {
-		this.tile = tile;
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
 	}
 	public String getBrand() {
 		return brand;
@@ -46,18 +79,35 @@ public class uploadFile {
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
-	public String getName() {
-		return name;
+	public String getTypeTshirt() {
+		return typeTshirt;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setTypeTshirt(String typeTshirt) {
+		this.typeTshirt = typeTshirt;
 	}
-	public String getUsername() {
-		return username;
+	public Integer getIdAccount() {
+		return idAccount;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setIdAccount(Integer idAccount) {
+		this.idAccount = idAccount;
 	}
-
+	public String getIp() {
+		return ip;
+	}
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+	public Date getDay() {
+		return day;
+	}
+	public void setDay(Date day) {
+		this.day = day;
+	}
+	public String getNameAccount() {
+		return nameAccount;
+	}
+	public void setNameAccount(String nameAccount) {
+		this.nameAccount = nameAccount;
+	}
 	    
 }
