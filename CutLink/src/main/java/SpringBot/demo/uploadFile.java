@@ -19,6 +19,14 @@ public class uploadFile {
 	private String ip;
 	private Date day;
 	private String nameAccount;
+	private String price;
+
+	public String getPrice() {
+		return price;
+	}
+	public void setPrice(String price) {
+		this.price = price;
+	}
 	public Integer getId() {
 		return id;
 	}
