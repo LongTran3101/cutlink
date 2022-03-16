@@ -188,7 +188,7 @@ public class CheckSaleMerch {
 
 					// System.out.println();
 					System.out.println(mech.getTypeTshirt());
-					Thread.sleep(7000);
+					Thread.sleep(10000);
 					System.out.println("Check men");
 					WebElement mencheck = driver.findElement(By.cssSelector(".men-checkbox i"));
 					String classname = mencheck.getAttribute("class");
