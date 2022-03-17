@@ -449,10 +449,10 @@ public class CheckSaleMerch {
 					des1.sendKeys(Keys.DELETE);
 					if (mech.getDes1() != null && !mech.getDes1().isEmpty()) {
 
-						des1.sendKeys("");
+						des1.sendKeys(mech.getDes1());
 						Thread.sleep(2000);
 					} else {
-						des1.sendKeys(mech.getDes1());
+						des1.sendKeys("");
 						Thread.sleep(2000);
 					}
 					WebElement des2 = driver.findElement(By.cssSelector("#designCreator-productEditor-featureBullet2"));
@@ -460,10 +460,10 @@ public class CheckSaleMerch {
 					des2.sendKeys(Keys.DELETE);
 					if (mech.getDes2() != null && !mech.getDes2().isEmpty()) {
 
-						des1.sendKeys("");
+						des2.sendKeys(mech.getDes2());
 						Thread.sleep(2000);
 					} else {
-						des2.sendKeys(mech.getDes2());
+						des2.sendKeys(mech.getDes1());
 						Thread.sleep(2000);
 					}
 					driver.findElement(By.cssSelector("#submit-button")).click();
