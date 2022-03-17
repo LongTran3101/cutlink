@@ -478,6 +478,7 @@ public class CheckSaleMerch {
 					
 					// men-checkbox
 				} catch (Exception e) {
+					mech.setStatus("5");
 					if (driver != null) {
 						try {
 							driver.quit();
@@ -493,6 +494,7 @@ public class CheckSaleMerch {
 					//return "notok";
 
 				} finally {
+					
 					if (driver != null) {
 						try {
 							driver.quit();
