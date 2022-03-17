@@ -66,7 +66,7 @@ public class Scheduler {
 				        //options.AddAdditionalCapability("useAutomationExtension", false);
 						 driver= new ChromeDriver(options);
 						driver.get("https://merch.amazon.com/dashboard");
-						Thread.sleep(15000);
+						Thread.sleep(25000);
 						WebDriverWait wait = new WebDriverWait(driver, 20);
 						 wait.until(ExpectedConditions
 									.visibilityOfElementLocated(By.cssSelector(".yesterday")));
@@ -85,6 +85,9 @@ public class Scheduler {
 						String alltimeMoney= driver.findElement(By.cssSelector(".all-time .number")).getText();
 						String alltimeSale =driver.findElement(By.cssSelector(".all-time .net-sales")).getText();
 						String day= driver.findElement(By.cssSelector(".today .subtitle")).getText();
+						String used= driver.findElement(By.cssSelector(".uploads .used")).getText();
+						String limit= driver.findElement(By.cssSelector(".uploads .limit")).getText();
+						
 						System.out.println(yesterdaySale);
 						System.out.println(yesterdayMoney);
 						System.out.println(todaySale);
@@ -92,6 +95,8 @@ public class Scheduler {
 						DateFormat df = new SimpleDateFormat("MM/dd/yy"); 
 						DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd"); 
 						SaleMerch sale=new SaleMerch();
+						sale.setUsed(used);
+						sale.setLimitslot(limit);
 						sale.setTier(tier);
 						sale.setCoutDesgin(Integer.parseInt(coutDesgin));
 						sale.setLast7dayMoney(Double.parseDouble(last7dayMoney));

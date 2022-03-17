@@ -12,6 +12,8 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.openqa.selenium.By;
+
 /**
  *
  * @author DreamStore
@@ -21,6 +23,8 @@ public class SaleMerch  {
     
     private Integer id;
     private String name;
+    private String used;
+    private String limitslot;
     private String ip;
     private Date day;
     private int sale;
@@ -281,5 +285,23 @@ public class SaleMerch  {
     public String toString() {
         return "javaapplication5.AccountMerch[ id=" + id + " ]";
     }
+
+	public String getUsed() {
+		return used;
+	}
+
+	public void setUsed(String used) {
+		this.used = used;
+	}
+
+	public String getLimitslot() {
+		return limitslot;
+	}
+
+	public void setLimitslot(String limitslot) {
+		this.limitslot = limitslot;
+	}
+
+
     
 }

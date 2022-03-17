@@ -11,6 +11,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -77,6 +79,9 @@ public class CheckSaleMerch {
 		return "ok";
 
 	}
+	
+	
+	
 
 	@RequestMapping(value = "/uploadMerchMulti", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	private String uploadMulti(@RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
@@ -214,10 +219,11 @@ public class CheckSaleMerch {
 
 					// System.out.println();
 					System.out.println(mech.getTypeTshirt());
+					List<String> typetshirt = Stream.of(mech.getTypeTshirt().split(",", -1)).collect(Collectors.toList());
 					Thread.sleep(10000);
 					System.out.println("Check men");
 
-					if (mech.getTypeTshirt().indexOf("1") == -1) {
+					if (!typetshirt.contains("1")) {
 						System.out.println("k click");
 						driver.findElement(By.cssSelector(".men-checkbox i")).click();
 
@@ -227,7 +233,7 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getTypeTshirt().indexOf("2") == -1) {
+					if (!typetshirt.contains("2")) {
 						driver.findElement(By.cssSelector(".women-checkbox i")).click();
 
 					}
@@ -235,7 +241,7 @@ public class CheckSaleMerch {
 					System.out.println("trc check kid");
 					Thread.sleep(1000);
 
-					if (mech.getTypeTshirt().indexOf("3") != -1) {
+					if (typetshirt.contains("3")) {
 						System.out.println("kclick");
 						driver.findElement(By.cssSelector(".youth-checkbox i")).click();
 
@@ -243,8 +249,8 @@ public class CheckSaleMerch {
 					System.out.println("sau check kid");
 					// select mau
 					Thread.sleep(4000);
-
-					if (mech.getMau().indexOf("1") != -1) {
+					List<String> lstmau = Stream.of(mech.getMau().split(",", -1)).collect(Collectors.toList());
+					if (lstmau.contains("1")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
 
@@ -252,16 +258,16 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("2") != -1) {
-						System.out.println("Co click");
+					if (lstmau.contains("2")) {
+						System.out.println("Co click baby_blue-checkbox");
 						driver.findElement(By.cssSelector(".baby_blue-checkbox")).click();
 
 					}
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("3") == -1) {
-						System.out.println("Co click");
+					if (!lstmau.contains("3")) {
+						System.out.println("Co click black-checkbox");
 						driver.findElement(By.cssSelector(".black-checkbox")).click();
 
 					}
@@ -269,7 +275,7 @@ public class CheckSaleMerch {
 					System.out.println("sau blackcheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("4") != -1) {
+					if (lstmau.contains("4")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".cranberry-checkbox")).click();
 
@@ -278,7 +284,7 @@ public class CheckSaleMerch {
 					System.out.println("sau cranberrycheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("5") != -1) {
+					if (lstmau.contains("5")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".heather_grey-checkbox")).click();
 
@@ -287,7 +293,7 @@ public class CheckSaleMerch {
 					System.out.println("sau heathergreycheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("6") != -1) {
+					if (lstmau.contains("6")) {
 
 						driver.findElement(By.cssSelector(".kelly_green-checkbox")).click();
 
@@ -296,7 +302,7 @@ public class CheckSaleMerch {
 					System.out.println("sau kellygreencheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("7") != -1) {
+					if (lstmau.contains("7")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".lemon-checkbox")).click();
 
@@ -305,7 +311,7 @@ public class CheckSaleMerch {
 					System.out.println("sau lemoncheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("8") != -1) {
+					if (lstmau.contains("8")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".navy-checkbox")).click();
 
@@ -314,7 +320,7 @@ public class CheckSaleMerch {
 					System.out.println("sau navycheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("9") != -1) {
+					if (lstmau.contains("9")) {
 
 						driver.findElement(By.cssSelector(".olive-checkbox")).click();
 
@@ -323,7 +329,7 @@ public class CheckSaleMerch {
 					System.out.println("sau olivecheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("10") != -1) {
+					if (lstmau.contains("10")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".orange-checkbox")).click();
 
@@ -332,7 +338,7 @@ public class CheckSaleMerch {
 					System.out.println("sau orangecheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("11") != -1) {
+					if (lstmau.contains("11")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".pink-checkbox")).click();
 
@@ -341,7 +347,7 @@ public class CheckSaleMerch {
 					System.out.println("sau pinkcheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("12") != -1) {
+					if (lstmau.contains("12")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".purple-checkbox")).click();
 
@@ -350,7 +356,7 @@ public class CheckSaleMerch {
 					System.out.println("sau purplecheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("13") != -1) {
+					if (lstmau.contains("13")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".red-checkbox")).click();
 
@@ -359,7 +365,7 @@ public class CheckSaleMerch {
 					System.out.println("sau redcheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("14") != -1) {
+					if (lstmau.contains("14")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".royal-checkbox")).click();
 
@@ -368,7 +374,7 @@ public class CheckSaleMerch {
 					System.out.println("sau royalcheckbox");
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("15") != -1) {
+					if (lstmau.contains("15")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".white-checkbox")).click();
 
@@ -376,7 +382,7 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("16") != -1) {
+					if (lstmau.contains("16")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".brown-checkbox")).click();
 
@@ -384,7 +390,7 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("17") != -1) {
+					if (lstmau.contains("17")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".dark_heather-checkbox")).click();
 
@@ -392,7 +398,7 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("18") != -1) {
+					if (lstmau.contains("18")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".grass-checkbox")).click();
 
@@ -400,7 +406,7 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("19") != -1) {
+					if (lstmau.contains("19")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".heather_blue-checkbox")).click();
 
@@ -408,7 +414,7 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("20") != -1) {
+					if (lstmau.contains("20")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".silver-checkbox")).click();
 
@@ -416,7 +422,7 @@ public class CheckSaleMerch {
 
 					Thread.sleep(1000);
 
-					if (mech.getMau().indexOf("21") != -1) {
+					if (lstmau.contains("21")) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".slate-checkbox")).click();
 
@@ -464,11 +470,12 @@ public class CheckSaleMerch {
 					Thread.sleep(3000);
 					driver.findElement(By.cssSelector(".btn-submit")).click();
 					Thread.sleep(10000);
-
+					
 					if (isElementCss(By.cssSelector("#redirect-designs-new"), driver)) {
+						mech.setStatus("2");
 						driver.findElement(By.cssSelector("#redirect-designs-new")).click();
 					}
-
+					
 					// men-checkbox
 				} catch (Exception e) {
 					if (driver != null) {
@@ -480,8 +487,10 @@ public class CheckSaleMerch {
 
 						// driver.close();
 					}
+					
 					e.printStackTrace();
-					return "notok";
+					continue;
+					//return "notok";
 
 				} finally {
 					if (driver != null) {
@@ -494,7 +503,18 @@ public class CheckSaleMerch {
 						// driver.close();
 					}
 				}
+				
+				
+				
+				
+				
 			}
+			
+			
+			
+			String jsonString = objectMapper.writeValueAsString(mechlst);
+			CallAPi callApi =new CallAPi();
+			 String rep =callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
 
 		} catch (Exception e) {
 			// TODO: handle exception
