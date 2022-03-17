@@ -89,6 +89,31 @@ public class CheckSaleMerch {
 
 			for (uploadFile mech : mechlst) {
 				try {
+					String home = System.getProperty("user.home");
+					try {
+						String link = "http://45.32.101.196:8080/download2?username=" + mech.getUsername() + "&imagename="
+								+ mech.getName().replaceAll(" ", "%20");
+						URL url = new URL(link);
+						InputStream in = new BufferedInputStream(url.openStream());
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						byte[] buf = new byte[1024];
+						int n = 0;
+						while (-1 != (n = in.read(buf))) {
+							out.write(buf, 0, n);
+						}
+						out.close();
+						in.close();
+						byte[] response = out.toByteArray();
+						
+						// File file = new File(home+"/Downloads/" + fileName + ".txt");
+						FileOutputStream fos = new FileOutputStream(home + "/Downloads/" + mech.getName());
+						fos.write(response);
+						fos.close();
+					}catch (Exception e) {
+						mech.setStatus("5");//loi tai file
+						continue;
+					}
+					
 					// System.out.println("a");
 					// System.out.println(mech.getDay());
 					if (driver == null) {
@@ -168,12 +193,13 @@ public class CheckSaleMerch {
 					Thread.sleep(2000);
 					driver.findElement(By.cssSelector(".btn-submit")).click();
 					Thread.sleep(4000);
-					String home = System.getProperty("user.home");
+
+					System.out.println("path " + home + "/Downloads/" + mech.getName());
 					File f = new File(home + "/Downloads/" + mech.getName());
 					if (f.exists() && !f.isDirectory()) {
-
+						System.out.println("file có tồn tại");
 					} else {
-
+						System.out.println("file k tồn tại");
 						continue;
 					}
 
@@ -190,355 +216,208 @@ public class CheckSaleMerch {
 					System.out.println(mech.getTypeTshirt());
 					Thread.sleep(10000);
 					System.out.println("Check men");
-					WebElement mencheck = driver.findElement(By.cssSelector(".men-checkbox i"));
-					String classname = mencheck.getAttribute("class");
-					System.out.println("classname " + classname);
-					if (mech.getTypeTshirt().indexOf("1")!=-1 && !classname.contains("sci-check-box")) {
-						System.out.println("co click");
-						mencheck.click();
 
-					}
-					if (mech.getTypeTshirt().indexOf("1")==-1 && classname.contains("sci-check-box")) {
+					if (mech.getTypeTshirt().indexOf("1") == -1) {
 						System.out.println("k click");
-						mencheck.click();
+						driver.findElement(By.cssSelector(".men-checkbox i")).click();
 
 					}
 
 					System.out.println("Sau check men");
 
 					Thread.sleep(1000);
-					WebElement womencheckbox = driver.findElement(By.cssSelector(".women-checkbox i"));
-					classname = womencheckbox.getAttribute("class");
 
-					if (mech.getTypeTshirt().indexOf("2")!=-1 && !classname.contains("sci-check-box")) {
-						System.out.println("co click");
-						womencheckbox.click();
-
-					}
-					if (mech.getTypeTshirt().indexOf("2")==-1 && classname.contains("sci-check-box")) {
-						System.out.println("k click");
-						womencheckbox.click();
+					if (mech.getTypeTshirt().indexOf("2") == -1) {
+						driver.findElement(By.cssSelector(".women-checkbox i")).click();
 
 					}
 
 					System.out.println("trc check kid");
 					Thread.sleep(1000);
-					WebElement youthcheckbox = driver.findElement(By.cssSelector(".youth-checkbox i"));
-					 classname = youthcheckbox.getAttribute("class");
 
-					if (mech.getTypeTshirt().indexOf("3")!=-1 && !classname.contains("sci-check-box")) {
-						System.out.println("Co click");
-						youthcheckbox.click();
-
-					}
-					if (mech.getTypeTshirt().indexOf("3")==-1 && classname.contains("sci-check-box")) {
+					if (mech.getTypeTshirt().indexOf("3") != -1) {
 						System.out.println("kclick");
-						youthcheckbox.click();
+						driver.findElement(By.cssSelector(".youth-checkbox i")).click();
 
 					}
 					System.out.println("sau check kid");
 					// select mau
 					Thread.sleep(4000);
-					WebElement asphaltcheckbox = driver.findElement(By.cssSelector(".asphalt-checkbox i"));
-					System.out.println("trc asphaltcheckbox");
-					classname = asphaltcheckbox.getAttribute("class");
-					System.out.println("sau classname");
-					
-					if (mech.getMau().indexOf("1")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("1") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("1")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
 
-					}
-					
-					
-					System.out.println("sau asphaltcheckbox");
 					Thread.sleep(1000);
-					WebElement babybluecheckbox = driver.findElement(By.cssSelector(".baby_blue-checkbox i"));
-					System.out.println("trc get babybluecheckbox");
-					classname = babybluecheckbox.getAttribute("class");
-					
-					if (mech.getMau().indexOf("2")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("2") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".baby_blue-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("2")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".baby_blue-checkbox")).click();
 
-					}
-					
-					
-				
-					System.out.println("sau babybluecheckbox");
 					Thread.sleep(1000);
-					WebElement blackcheckbox = driver.findElement(By.cssSelector(".black-checkbox i"));
-					classname = blackcheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("3")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("3") == -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".black-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("3")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".black-checkbox")).click();
 
-					}
 					System.out.println("sau blackcheckbox");
 					Thread.sleep(1000);
-					WebElement cranberrycheckbox = driver.findElement(By.cssSelector(".cranberry-checkbox i"));
-					classname = cranberrycheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("4")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("4") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".cranberry-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("4")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".cranberry-checkbox")).click();
 
-					}
 					System.out.println("sau cranberrycheckbox");
 					Thread.sleep(1000);
-					WebElement heathergreycheckbox = driver.findElement(By.cssSelector(".heather_grey-checkbox i"));
-					classname = heathergreycheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("5")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("5") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".heather_grey-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("5")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".heather_grey-checkbox")).click();
 
-					}
 					System.out.println("sau heathergreycheckbox");
 					Thread.sleep(1000);
-					WebElement kellygreencheckbox = driver.findElement(By.cssSelector(".kelly_green-checkbox i"));
-					classname = kellygreencheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("6")!=-1 && !classname.contains("sci-check")) {
-						System.out.println("Co click");
+
+					if (mech.getMau().indexOf("6") != -1) {
+
 						driver.findElement(By.cssSelector(".kelly_green-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("6")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".kelly_green-checkbox")).click();
 
-					}
 					System.out.println("sau kellygreencheckbox");
 					Thread.sleep(1000);
-					WebElement lemoncheckbox = driver.findElement(By.cssSelector(".lemon-checkbox i"));
-					classname = lemoncheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("7")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("7") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".lemon-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("7")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".lemon-checkbox")).click();
 
-					}
 					System.out.println("sau lemoncheckbox");
 					Thread.sleep(1000);
-					WebElement navycheckbox = driver.findElement(By.cssSelector(".navy-checkbox i"));
-					classname = navycheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("8")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("8") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".navy-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("8")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".navy-checkbox")).click();
 
-					}
 					System.out.println("sau navycheckbox");
 					Thread.sleep(1000);
-					WebElement olivecheckbox = driver.findElement(By.cssSelector(".olive-checkbox i"));
-					classname = olivecheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("9")!=-1 && !classname.contains("sci-check")) {
-						System.out.println("Co click");
+
+					if (mech.getMau().indexOf("9") != -1) {
+
 						driver.findElement(By.cssSelector(".olive-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("9")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".olive-checkbox")).click();
 
-					}
 					System.out.println("sau olivecheckbox");
 					Thread.sleep(1000);
-					WebElement orangecheckbox = driver.findElement(By.cssSelector(".orange-checkbox i"));
-					classname = orangecheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("10")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("10") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".orange-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("10")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".orange-checkbox")).click();
 
-					}
 					System.out.println("sau orangecheckbox");
 					Thread.sleep(1000);
-					WebElement pinkcheckbox = driver.findElement(By.cssSelector(".pink-checkbox i"));
-					classname = pinkcheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("11")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("11") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".pink-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("11")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".pink-checkbox")).click();
 
-					}
 					System.out.println("sau pinkcheckbox");
 					Thread.sleep(1000);
-					WebElement purplecheckbox = driver.findElement(By.cssSelector(".purple-checkbox i"));
-					classname = purplecheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("12")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("12") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".purple-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("12")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".purple-checkbox")).click();
 
-					}
 					System.out.println("sau purplecheckbox");
 					Thread.sleep(1000);
-					WebElement redcheckbox = driver.findElement(By.cssSelector(".red-checkbox i"));
-					classname = redcheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("13")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("13") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".red-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("13")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".red-checkbox")).click();
 
-					}
 					System.out.println("sau redcheckbox");
 					Thread.sleep(1000);
-					WebElement royalcheckbox = driver.findElement(By.cssSelector(".royal-checkbox i"));
-					classname = royalcheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("14")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("14") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".royal-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("14")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".royal-checkbox")).click();
 
-					}
 					System.out.println("sau royalcheckbox");
 					Thread.sleep(1000);
-					WebElement whitecheckbox = driver.findElement(By.cssSelector(".white-checkbox i"));
-					classname = whitecheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("15")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("15") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".white-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("15")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".white-checkbox")).click();
 
-					}
 					Thread.sleep(1000);
-					WebElement browncheckbox = driver.findElement(By.cssSelector(".brown-checkbox i"));
-					classname = browncheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("16")!=-1 && !classname.contains("sci-check")) {
-						System.out.println("Co click");
-						driver.findElement(By.cssSelector(".brown-checkbox")).click();
 
-					}
-					if (mech.getMau().indexOf("16")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
+					if (mech.getMau().indexOf("16") != -1) {
+						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".brown-checkbox")).click();
 
 					}
 
 					Thread.sleep(1000);
-					WebElement darkheathercheckbox = driver.findElement(By.cssSelector(".dark_heather-checkbox i"));
-					classname = darkheathercheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("17")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("17") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".dark_heather-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("17")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".dark_heather-checkbox")).click();
-
-					}
 
 					Thread.sleep(1000);
-					WebElement grasscheckbox = driver.findElement(By.cssSelector(".grass-checkbox i"));
-					classname = grasscheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("18")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("18") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".grass-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("18")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".grass-checkbox")).click();
-
-					}
-
 
 					Thread.sleep(1000);
-					WebElement heatherbluecheckbox = driver.findElement(By.cssSelector(".heather_blue-checkbox i"));
-					classname = heatherbluecheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("19")!=-1 && !classname.contains("sci-check")) {
+
+					if (mech.getMau().indexOf("19") != -1) {
 						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".heather_blue-checkbox")).click();
 
 					}
-					if (mech.getMau().indexOf("19")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
-						driver.findElement(By.cssSelector(".heather_blue-checkbox")).click();
-
-					}
-
 
 					Thread.sleep(1000);
-					WebElement silvercheckbox = driver.findElement(By.cssSelector(".silver-checkbox i"));
-					classname = silvercheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("20")!=-1 && !classname.contains("sci-check")) {
-						System.out.println("Co click");
-						driver.findElement(By.cssSelector(".silver-checkbox")).click();
 
-					}
-					if (mech.getMau().indexOf("20")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
+					if (mech.getMau().indexOf("20") != -1) {
+						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".silver-checkbox")).click();
 
 					}
 
 					Thread.sleep(1000);
-					WebElement slatecheckbox = driver.findElement(By.cssSelector(".slate-checkbox i"));
-					classname = slatecheckbox.getAttribute("class");
-					if (mech.getMau().indexOf("21")!=-1 && !classname.contains("sci-check")) {
-						System.out.println("Co click");
-						driver.findElement(By.cssSelector(".slate-checkbox")).click();
 
-					}
-					if (mech.getMau().indexOf("21")==-1 && classname.contains("sci-check")) {
-						System.out.println("kclick");
+					if (mech.getMau().indexOf("21") != -1) {
+						System.out.println("Co click");
 						driver.findElement(By.cssSelector(".slate-checkbox")).click();
 
 					}
@@ -559,27 +438,25 @@ public class CheckSaleMerch {
 					brand.sendKeys(Keys.DELETE);
 					brand.sendKeys(mech.getBrand());
 					Thread.sleep(2000);
-					WebElement des1 = driver
-							.findElement(By.cssSelector("#designCreator-productEditor-featureBullet1"));
+					WebElement des1 = driver.findElement(By.cssSelector("#designCreator-productEditor-featureBullet1"));
 					des1.sendKeys(Keys.CONTROL + "a");
 					des1.sendKeys(Keys.DELETE);
 					if (mech.getDes1() != null && !mech.getDes1().isEmpty()) {
-						
+
 						des1.sendKeys("");
 						Thread.sleep(2000);
-					}else {
+					} else {
 						des1.sendKeys(mech.getDes1());
 						Thread.sleep(2000);
 					}
-					WebElement des2 = driver
-							.findElement(By.cssSelector("#designCreator-productEditor-featureBullet2"));
+					WebElement des2 = driver.findElement(By.cssSelector("#designCreator-productEditor-featureBullet2"));
 					des2.sendKeys(Keys.CONTROL + "a");
 					des2.sendKeys(Keys.DELETE);
 					if (mech.getDes2() != null && !mech.getDes2().isEmpty()) {
-						
+
 						des1.sendKeys("");
 						Thread.sleep(2000);
-					}else {
+					} else {
 						des2.sendKeys(mech.getDes2());
 						Thread.sleep(2000);
 					}
