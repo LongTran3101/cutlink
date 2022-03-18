@@ -4,6 +4,7 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
@@ -79,13 +80,18 @@ public class CheckSaleMerch {
 		return "ok";
 
 	}
-	
-	
-	
 
 	@RequestMapping(value = "/uploadMerchMulti", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	private String uploadMulti(@RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
 		try {
+
+			// String filename = PathLocal + "./key.txt";
+			FileWriter fw = new FileWriter("log.txt"); // the true will append the new data
+			fw.write("");// appends the string to the file
+			fw.close();
+			FileWriter fw2 = new FileWriter("log.txt"); // the true will append the new data
+			fw2.write("1");// appends the string to the file
+			fw2.close();
 			WebDriverManager.chromedriver().setup();
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<uploadFile> mechlst = objectMapper.readValue(req, new TypeReference<List<uploadFile>>() {
@@ -96,8 +102,9 @@ public class CheckSaleMerch {
 				try {
 					String home = System.getProperty("user.home");
 					try {
-						String link = "http://45.32.101.196:8080/download2?username=" + mech.getUsername() + "&imagename="
-								+ mech.getName().replaceAll(" ", "%20");
+						String link = "http://45.32.101.196:8080/download2?username=" + mech.getUsername()
+								+ "&imagename=" + mech.getName().replaceAll(" ", "%20");
+						System.out.println("Link : "+ link);
 						URL url = new URL(link);
 						InputStream in = new BufferedInputStream(url.openStream());
 						ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -109,16 +116,23 @@ public class CheckSaleMerch {
 						out.close();
 						in.close();
 						byte[] response = out.toByteArray();
-						
+
 						// File file = new File(home+"/Downloads/" + fileName + ".txt");
 						FileOutputStream fos = new FileOutputStream(home + "/Downloads/" + mech.getName());
 						fos.write(response);
 						fos.close();
-					}catch (Exception e) {
-						mech.setStatus("5");//loi tai file
+					} catch (Exception e) {
+						try {
+							mech.setStatus("5");
+							String jsonString = objectMapper.writeValueAsString(mech);
+							CallAPi callApi = new CallAPi();
+							String rep = callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
+						} catch (Exception e2) {
+							// TODO: handle exception
+						}
 						continue;
 					}
-					
+
 					// System.out.println("a");
 					// System.out.println(mech.getDay());
 					if (driver == null) {
@@ -150,10 +164,16 @@ public class CheckSaleMerch {
 						// options.AddAdditionalCapability("useAutomationExtension", false);
 						driver = new ChromeDriver(options);
 					}
-					if (!mech.getNameAccount().equalsIgnoreCase(nameacc)) {
-						nameacc = mech.getProfile();
+					if (!mech.getNameAccount().toLowerCase().equalsIgnoreCase(nameacc.toLowerCase()) ) {
+						System.out.println("So Sanh khac name accout tao lại");
+						System.out.println(mech.getNameAccount() +"   name accout");
+						System.out.println(nameacc +"   nameacc");
+						nameacc = mech.getNameAccount();
 						try {
-							driver.quit();
+							if (driver != null) {
+								driver.quit();
+							}
+							
 						} catch (Exception e2) {
 							// TODO: handle exception
 						}
@@ -185,11 +205,9 @@ public class CheckSaleMerch {
 
 					}
 
-					driver.get("https://merch.amazon.com/dashboard");
-
-					Thread.sleep(20000);
+					
 					driver.get("https://merch.amazon.com/designs/new");
-					Thread.sleep(10000);
+					Thread.sleep(20000);
 					driver.findElement(By.cssSelector("#select-marketplace-button")).click();
 					Thread.sleep(4000);
 					driver.findElement(By.cssSelector("#select-none")).click();
@@ -219,7 +237,8 @@ public class CheckSaleMerch {
 
 					// System.out.println();
 					System.out.println(mech.getTypeTshirt());
-					List<String> typetshirt = Stream.of(mech.getTypeTshirt().split(",", -1)).collect(Collectors.toList());
+					List<String> typetshirt = Stream.of(mech.getTypeTshirt().split(",", -1))
+							.collect(Collectors.toList());
 					Thread.sleep(10000);
 					System.out.println("Check men");
 
@@ -463,22 +482,37 @@ public class CheckSaleMerch {
 						des2.sendKeys(mech.getDes2());
 						Thread.sleep(2000);
 					} else {
-						des2.sendKeys(mech.getDes1());
+						des2.sendKeys("");
 						Thread.sleep(2000);
 					}
 					driver.findElement(By.cssSelector("#submit-button")).click();
 					Thread.sleep(3000);
 					driver.findElement(By.cssSelector(".btn-submit")).click();
 					Thread.sleep(10000);
-					
+
 					if (isElementCss(By.cssSelector("#redirect-designs-new"), driver)) {
-						mech.setStatus("2");
-						driver.findElement(By.cssSelector("#redirect-designs-new")).click();
+						try {
+							mech.setStatus("2");
+							String jsonString = objectMapper.writeValueAsString(mech);
+							CallAPi callApi = new CallAPi();
+							String rep = callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
+						} catch (Exception e2) {
+							// TODO: handle exception
+						}
+						//driver.findElement(By.cssSelector("#redirect-designs-new")).click();
 					}
+
 					
 					// men-checkbox
 				} catch (Exception e) {
-					mech.setStatus("5");
+					try {
+						mech.setStatus("6");
+						String jsonString = objectMapper.writeValueAsString(mech);
+						CallAPi callApi = new CallAPi();
+						String rep = callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
+					} catch (Exception e2) {
+						// TODO: handle exception
+					}
 					if (driver != null) {
 						try {
 							driver.quit();
@@ -488,36 +522,20 @@ public class CheckSaleMerch {
 
 						// driver.close();
 					}
-					
+
 					e.printStackTrace();
 					continue;
-					//return "notok";
+					// return "notok";
 
 				} finally {
+
 					
-					if (driver != null) {
-						try {
-							driver.quit();
-						} catch (Exception e2) {
-							// TODO: handle exception
-						}
-
-						// driver.close();
-					}
 				}
-				
-				
-				
-				
-				
-			}
-			
-			
-			
-			String jsonString = objectMapper.writeValueAsString(mechlst);
-			CallAPi callApi =new CallAPi();
-			 String rep =callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
 
+			}
+
+			
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -532,6 +550,17 @@ public class CheckSaleMerch {
 
 				// driver.close();
 			}
+			try {
+				FileWriter fw = new FileWriter("log.txt"); // the true will append the new data
+				fw.write("");// appends the string to the file
+				fw.close();
+				FileWriter fw2 = new FileWriter("log.txt"); // the true will append the new data
+				fw2.write("0");// appends the string to the file
+				fw2.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+
 		}
 
 		return "ok";
@@ -563,15 +592,16 @@ public class CheckSaleMerch {
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
 
-			options.addArguments("--user-data-dir=" + urlDataur);
-			options.addArguments("--profile-directory=" + nameProfile);
 			options.addArguments("--disable-notifications");
 			options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
-			// options.addArguments("disable-extensions");
+			options.addArguments(
+					"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36");
 			options.addArguments("--no-sandbox");
 			options.addArguments("start-maximized");
-			// options.AddExcludedArgument("enable-automation");
-			// options.AddAdditionalCapability("useAutomationExtension", false);
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-web-security");
+			options.addArguments("--disable-blink-features=AutomationControlled");
+			options.addArguments("start-maximized");
 			driver = new ChromeDriver(options);
 			driver.get("https://merch.amazon.com/dashboard");
 			Thread.sleep(10000);
@@ -592,6 +622,9 @@ public class CheckSaleMerch {
 			String alltimeMoney = driver.findElement(By.cssSelector(".all-time .number")).getText();
 			String alltimeSale = driver.findElement(By.cssSelector(".all-time .net-sales")).getText();
 			String day = driver.findElement(By.cssSelector(".today .subtitle")).getText();
+			String used= driver.findElement(By.cssSelector(".uploads .used")).getText();
+			String limit= driver.findElement(By.cssSelector(".uploads .limit")).getText();
+			
 			System.out.println(yesterdaySale);
 			System.out.println(yesterdayMoney);
 			System.out.println(todaySale);
@@ -600,6 +633,8 @@ public class CheckSaleMerch {
 			DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
 			SaleMerch sale = new SaleMerch();
 			sale.setTier(tier);
+			sale.setLimitslot(limit);
+			sale.setUsed(used);
 			sale.setCoutDesgin(Integer.parseInt(coutDesgin));
 			sale.setLast7dayMoney(Double.parseDouble(last7dayMoney));
 			sale.setThismonthMoney(Double.parseDouble(thismonthMoney));

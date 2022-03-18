@@ -1,10 +1,12 @@
 package SpringBot.demo;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -27,6 +29,22 @@ public class Scheduler {
 	@Scheduled(fixedRate=1000*60*180)
    public void cronJobSch() {
 		try { 
+			try {
+				String status="";
+				File myObj = new File("log.txt");
+				 Scanner myReader = new Scanner(myObj);
+
+	             while (myReader.hasNextLine()) {
+	            	 status = myReader.nextLine();
+
+	             }
+	             myReader.close();
+	             if (!status.isEmpty() && status.equalsIgnoreCase("1")) {
+	            	 return;
+	             }
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			
 			ObjectMapper objectMapper = new ObjectMapper();
 			CallAPi callApi =new CallAPi();
@@ -146,6 +164,8 @@ public class Scheduler {
 						SaleMerch sale=new SaleMerch();
 						sale.setTier("");
 						sale.setCoutDesgin(0);
+						sale.setLimitslot("0");
+						sale.setTier("0");
 						sale.setLast7dayMoney(new Double("0"));
 						sale.setThismonthMoney(new Double("0"));
 						sale.setPreviousmonthMoney(new Double("0"));
