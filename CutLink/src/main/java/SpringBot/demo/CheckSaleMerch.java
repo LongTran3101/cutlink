@@ -102,8 +102,7 @@ public class CheckSaleMerch {
 				try {
 					String home = System.getProperty("user.home");
 					try {
-						String link = "http://45.32.101.196:8080/download2?username=" + mech.getUsername()
-								+ "&imagename=" + mech.getName().replaceAll(" ", "%20");
+						String link = "http://45.32.101.196:8080/download2?imageid=" + mech.getId();
 						System.out.println("Link : "+ link);
 						URL url = new URL(link);
 						InputStream in = new BufferedInputStream(url.openStream());
@@ -591,7 +590,8 @@ public class CheckSaleMerch {
 			System.out.println(urlDataur);
 			WebDriverManager.chromedriver().setup();
 			ChromeOptions options = new ChromeOptions();
-
+			options.addArguments("--user-data-dir="+urlDataur);
+			options.addArguments("--profile-directory="+nameProfile);
 			options.addArguments("--disable-notifications");
 			options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 			options.addArguments(

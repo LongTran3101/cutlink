@@ -1,5 +1,6 @@
 package SpringBot.demo;
 
+import java.net.URLDecoder;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
@@ -9,6 +10,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.yaml.snakeyaml.util.UriEncoder;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -17,36 +19,10 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class Maintesst {
 	public static WebDriver driver;
 	public static void main(String[] args) {
-		try {
-			//Gson gson = new GsonBuilder().setPrettyPrinting().create();
-			ObjectMapper objectMapper = new ObjectMapper();
-			/*Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-			AccountMerch mech=gson.fromJson(req,AccountMerch.class);*/
-			System.out.println("a");
-			//System.out.println(mech.getDay());
-			String profile="C:\\Users\\longhuong\\AppData\\Local\\Google\\Chrome\\User Data\\Profile 1";
-			int b = profile.lastIndexOf("\\");
-			System.out.println(b);
-			String nameProfile=profile.substring(b+1);
-			String urlDataur=profile.substring(0, b+1);
-			System.out.println(nameProfile);
-			System.out.println(urlDataur);
-			WebDriverManager.chromedriver().setup();
-			ChromeOptions options = new ChromeOptions();
-			
-			options.addArguments("--user-data-dir="+urlDataur);
-			options.addArguments("--profile-directory="+nameProfile);
-	        options.addArguments("--disable-notifications");
-	        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
-	        //options.addArguments("disable-extensions");
-	        options.addArguments("--no-sandbox");
-	        options.addArguments("--disable-web-security");
-	        options.addArguments("--disable-blink-features=AutomationControlled");
-	        options.addArguments("start-maximized"); 
-	        //options.AddExcludedArgument("enable-automation");
-	        //options.AddAdditionalCapability("useAutomationExtension", false);
-			 driver= new ChromeDriver(options);
-			
+		try {String link2="http://45.32.101.196:8080/download2?username=longtn&imagename=Mama of both bleached Tees Glitter & Dirt Mama Of Both Camo.png";
+        String encodedText = URLDecoder.decode(link2, "UTF-8");
+
+        System.out.println(encodedText);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
