@@ -52,6 +52,15 @@ public class Scheduler {
 			 rep =callApi.callAPIPost("http://45.32.101.196:8080/getallaccfromip", "");
 			 List<AccountMerch> mechlst = objectMapper.readValue(rep, new TypeReference<List<AccountMerch>>(){});
 			System.out.println(mechlst.size());
+			try {
+				 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+				 p.waitFor();
+				Runtime.getRuntime().exec("taskkill /F /IM CHROME.exe");
+				 p.waitFor();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			Thread.sleep(1000);
 			 for (AccountMerch mech : mechlst) {
 				 try {
 						//Gson gson = new GsonBuilder().setPrettyPrinting().create();

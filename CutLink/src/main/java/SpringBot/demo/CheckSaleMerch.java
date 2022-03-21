@@ -96,6 +96,15 @@ public class CheckSaleMerch {
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<uploadFile> mechlst = objectMapper.readValue(req, new TypeReference<List<uploadFile>>() {
 			});
+			try {
+				 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+				 p.waitFor();
+				Runtime.getRuntime().exec("taskkill /F /IM CHROME.exe");
+				 p.waitFor();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			Thread.sleep(1000);
 			String nameacc = "";
 
 			for (uploadFile mech : mechlst) {
@@ -579,6 +588,15 @@ public class CheckSaleMerch {
 			 * Gson gson = new GsonBuilder().disableHtmlEscaping().create(); AccountMerch
 			 * mech=gson.fromJson(req,AccountMerch.class);
 			 */
+			try {
+				 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+				 p.waitFor();
+				Runtime.getRuntime().exec("taskkill /F /IM CHROME.exe");
+				 p.waitFor();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			Thread.sleep(1000);
 			System.out.println("a");
 			System.out.println(mech.getDay());
 			String profile = mech.getPath();
