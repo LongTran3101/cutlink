@@ -110,36 +110,40 @@ public class CheckSaleMerch {
 			for (uploadFile mech : mechlst) {
 				try {
 					String home = System.getProperty("user.home");
-					try {
-						String link = "http://45.32.101.196:8080/download2?imageid=" + mech.getId();
-						System.out.println("Link : "+ link);
-						URL url = new URL(link);
-						InputStream in = new BufferedInputStream(url.openStream());
-						ByteArrayOutputStream out = new ByteArrayOutputStream();
-						byte[] buf = new byte[1024];
-						int n = 0;
-						while (-1 != (n = in.read(buf))) {
-							out.write(buf, 0, n);
-						}
-						out.close();
-						in.close();
-						byte[] response = out.toByteArray();
-
-						// File file = new File(home+"/Downloads/" + fileName + ".txt");
-						FileOutputStream fos = new FileOutputStream(home + "/Downloads/" + mech.getName());
-						fos.write(response);
-						fos.close();
-					} catch (Exception e) {
+					if(mech.getNameuser()!=null && mech.getNameuser().equalsIgnoreCase("1"))
+					{
 						try {
-							mech.setStatus("5");
-							String jsonString = objectMapper.writeValueAsString(mech);
-							CallAPi callApi = new CallAPi();
-							String rep = callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
-						} catch (Exception e2) {
-							// TODO: handle exception
+							String link = "http://45.32.101.196:8080/download2?imageid=" + mech.getId();
+							System.out.println("Link : "+ link);
+							URL url = new URL(link);
+							InputStream in = new BufferedInputStream(url.openStream());
+							ByteArrayOutputStream out = new ByteArrayOutputStream();
+							byte[] buf = new byte[1024];
+							int n = 0;
+							while (-1 != (n = in.read(buf))) {
+								out.write(buf, 0, n);
+							}
+							out.close();
+							in.close();
+							byte[] response = out.toByteArray();
+
+							// File file = new File(home+"/Downloads/" + fileName + ".txt");
+							FileOutputStream fos = new FileOutputStream(home + "/Downloads/" + mech.getName());
+							fos.write(response);
+							fos.close();
+						} catch (Exception e) {
+							try {
+								mech.setStatus("5");
+								String jsonString = objectMapper.writeValueAsString(mech);
+								CallAPi callApi = new CallAPi();
+								String rep = callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
+							} catch (Exception e2) {
+								// TODO: handle exception
+							}
+							continue;
 						}
-						continue;
 					}
+					
 
 					// System.out.println("a");
 					// System.out.println(mech.getDay());
@@ -234,9 +238,16 @@ public class CheckSaleMerch {
 						continue;
 					}
 
-					WebElement elem = driver.findElement(By.cssSelector("#STANDARD_TSHIRT-FRONT"));
+					if (isElementCss(By.cssSelector("#STANDARD_TSHIRT-FRONT"), driver)) {
+						WebElement elem = driver.findElement(By.cssSelector("#STANDARD_TSHIRT-FRONT"));
 
-					elem.sendKeys(home + "/Downloads/" + mech.getName());
+						elem.sendKeys(home + "/Downloads/" + mech.getName());
+					}
+					if (isElementCss(By.cssSelector(".file-upload-input"), driver)) {
+						WebElement elem = driver.findElement(By.cssSelector(".file-upload-input"));
+
+						elem.sendKeys(home + "/Downloads/" + mech.getName());
+					}
 					System.out.println("UPLOAD FILE");
 					Thread.sleep(25000);
 

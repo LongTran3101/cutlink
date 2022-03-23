@@ -17,10 +17,17 @@ public class uploadFile {
 	private Integer idAccount;
 	//private Integer idImage;
 	private String ip;
+	public String getNameuser() {
+		return nameuser;
+	}
+	public void setNameuser(String nameuser) {
+		this.nameuser = nameuser;
+	}
 	private Date day;
 	private String nameAccount;
 	private String price;
 
+	private String nameuser;
 	public String getPrice() {
 		return price;
 	}
