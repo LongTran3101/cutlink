@@ -106,7 +106,7 @@ public class CheckSaleMerch {
 			}
 			Thread.sleep(1000);
 			String nameacc = "";
-
+			uploadFile uploadold=new uploadFile();
 			for (uploadFile mech : mechlst) {
 				try {
 					String home = System.getProperty("user.home");
@@ -149,7 +149,7 @@ public class CheckSaleMerch {
 					// System.out.println(mech.getDay());
 					if (driver == null) {
 						nameacc = mech.getNameAccount();
-
+						uploadold=mech;
 						String profile = mech.getProfile();
 						int b = profile.lastIndexOf("\\");
 						// System.out.println(b);
@@ -165,7 +165,7 @@ public class CheckSaleMerch {
 						options.addArguments("--disable-notifications");
 						options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 						options.addArguments(
-								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36");
+								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36");
 						options.addArguments("--no-sandbox");
 						options.addArguments("start-maximized");
 						options.addArguments("--no-sandbox");
@@ -180,7 +180,93 @@ public class CheckSaleMerch {
 						System.out.println("So Sanh khac name accout tao lại");
 						System.out.println(mech.getNameAccount() +"   name accout");
 						System.out.println(nameacc +"   nameacc");
+						
+						
+						System.out.println("check sale trc khi doi acc");
+						try {
+							driver.get("https://merch.amazon.com/dashboard");
+							Thread.sleep(35000);
+							
+							WebDriverWait wait = new WebDriverWait(driver, 20);
+							wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".yesterday")));
+							String yesterdaySale = driver.findElement(By.cssSelector(".yesterday .net-sales")).getText();
+							String todaySale = driver.findElement(By.cssSelector(".odometer-value")).getText();
+							String todayMoney = driver.findElement(By.cssSelector(".royalties .number")).getText();
+							String yesterdayMoney = driver.findElement(By.cssSelector(".yesterday .number")).getText();
+							String tier = driver.findElement(By.cssSelector(".tier-text .number")).getText();
+							String coutDesgin = driver.findElement(By.cssSelector(".published-designs .used")).getText();
+							String last7dayMoney = driver.findElement(By.cssSelector(".last-seven-days .number")).getText();
+							String last7daySale = driver.findElement(By.cssSelector(".last-seven-days .net-sales")).getText();
+							String thismonthMoney = driver.findElement(By.cssSelector(".this-month .number")).getText();
+							String thismonthSale = driver.findElement(By.cssSelector(".this-month .net-sales")).getText();
+							String previousmonthMoney = driver.findElement(By.cssSelector(".previous-month .number")).getText();
+							String previousmonthSale = driver.findElement(By.cssSelector(".previous-month .net-sales")).getText();
+							String alltimeMoney = driver.findElement(By.cssSelector(".all-time .number")).getText();
+							String alltimeSale = driver.findElement(By.cssSelector(".all-time .net-sales")).getText();
+							String day = driver.findElement(By.cssSelector(".today .subtitle")).getText();
+							String used= driver.findElement(By.cssSelector(".uploads .used")).getText();
+							String limit= driver.findElement(By.cssSelector(".uploads .limit")).getText();
+							
+							System.out.println(yesterdaySale);
+							System.out.println(yesterdayMoney);
+							System.out.println(todaySale);
+							System.out.println(todayMoney);
+							DateFormat df = new SimpleDateFormat("MM/dd/yy");
+							DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+							SaleMerch sale = new SaleMerch();
+							sale.setTier(tier);
+							sale.setLimitslot(limit);
+							sale.setUsed(used);
+							sale.setCoutDesgin(Integer.parseInt(coutDesgin));
+							sale.setLast7dayMoney(Double.parseDouble(last7dayMoney));
+							sale.setThismonthMoney(Double.parseDouble(thismonthMoney));
+							sale.setPreviousmonthMoney(Double.parseDouble(previousmonthMoney));
+							sale.setAlltimeMoney(Double.parseDouble(alltimeMoney));
+							sale.setLast7daySale(Integer.parseInt(last7daySale));
+							sale.setThismonthSale(Integer.parseInt(thismonthSale));
+							sale.setPreviousmonthSale(Integer.parseInt(previousmonthSale));
+							sale.setAlltimeSale(Integer.parseInt(alltimeSale));
+							sale.setDayString(df2.format(df.parse(day)));
+							sale.setDay(df.parse(day));
+							sale.setSale(Integer.parseInt(todaySale));
+							sale.setMoney(Double.parseDouble(todayMoney));
+							sale.setEmail("mmmm");
+							// sale.setId(mech.getId());
+							sale.setIp(mech.getIp());
+							sale.setMoneyyesterday((Double.parseDouble(yesterdayMoney)));
+							sale.setName(mech.getName());
+							sale.setPath(mech.getProfile());
+							sale.setUsername(mech.getUsername());
+							sale.setYesterday(Integer.parseInt(yesterdaySale));
+							sale.setStatus("1");
+							try {
+								List<ImageMerch> lst = new ArrayList<>();
+								List<WebElement> listelement = driver.findElements(By.cssSelector(".todays-shirts-list a"));
+								for (WebElement webElement : listelement) {
+									ImageMerch a = new ImageMerch();
+									a.setName(webElement.getAttribute("title"));
+									a.setUrl(webElement.getAttribute("href"));
+									a.setAcc(mech.getName());
+									lst.add(a);
+								}
+								sale.setLstimageMerch(lst);
+
+							} catch (Exception e) {
+								//e.printStackTrace();
+							}
+							CallAPi callApi = new CallAPi();
+							String jsonString = objectMapper.writeValueAsString(sale);
+							 callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
+
+							
+						} catch (Exception e) {
+							System.out.println("Loi check sale chuyen acc");
+							// TODO: handle exception
+						}
+						 
+						// end
 						nameacc = mech.getNameAccount();
+						uploadold=mech;
 						try {
 							if (driver != null) {
 								driver.quit();
@@ -242,7 +328,7 @@ public class CheckSaleMerch {
 						WebElement elem = driver.findElement(By.cssSelector("#STANDARD_TSHIRT-FRONT"));
 
 						elem.sendKeys(home + "/Downloads/" + mech.getName());
-					}
+					}else
 					if (isElementCss(By.cssSelector(".file-upload-input"), driver)) {
 						WebElement elem = driver.findElement(By.cssSelector(".file-upload-input"));
 
@@ -624,7 +710,7 @@ public class CheckSaleMerch {
 			options.addArguments("--disable-notifications");
 			options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 			options.addArguments(
-					"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36");
+					"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36");
 			options.addArguments("--no-sandbox");
 			options.addArguments("start-maximized");
 			options.addArguments("--no-sandbox");
@@ -633,7 +719,7 @@ public class CheckSaleMerch {
 			options.addArguments("start-maximized");
 			driver = new ChromeDriver(options);
 			driver.get("https://merch.amazon.com/dashboard");
-			Thread.sleep(10000);
+			Thread.sleep(35000);
 			WebDriverWait wait = new WebDriverWait(driver, 20);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".yesterday")));
 			String yesterdaySale = driver.findElement(By.cssSelector(".yesterday .net-sales")).getText();
