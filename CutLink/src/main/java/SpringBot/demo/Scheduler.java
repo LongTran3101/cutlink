@@ -67,6 +67,7 @@ public class Scheduler {
 
 						/*Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 						AccountMerch mech=gson.fromJson(req,AccountMerch.class);*/
+						Thread.sleep(10000);
 						System.out.println("a");
 						System.out.println(mech.getDay());
 						String profile=mech.getPath();
@@ -94,11 +95,11 @@ public class Scheduler {
 						 driver= new ChromeDriver(options);
 						driver.get("https://merch.amazon.com/dashboard");
 						Thread.sleep(35000);
-						WebDriverWait wait = new WebDriverWait(driver, 20);
+						/*WebDriverWait wait = new WebDriverWait(driver, 50);
 						 wait.until(ExpectedConditions
-									.visibilityOfElementLocated(By.cssSelector(".yesterday")));
+									.visibilityOfElementLocated(By.cssSelector(".yesterday")));*/
 						String yesterdaySale =driver.findElement(By.cssSelector(".yesterday .net-sales")).getText();
-						String todaySale =driver.findElement(By.cssSelector(".odometer-value")).getText();
+						String todaySale = driver.findElement(By.cssSelector(".today-card .total-sales")).getText();
 						String todayMoney= driver.findElement(By.cssSelector(".royalties .number")).getText();
 						String yesterdayMoney= driver.findElement(By.cssSelector(".yesterday .number")).getText();
 						String tier=driver.findElement(By.cssSelector(".tier-text .number")).getText();
@@ -114,7 +115,7 @@ public class Scheduler {
 						String day= driver.findElement(By.cssSelector(".today .subtitle")).getText();
 						String used= driver.findElement(By.cssSelector(".uploads .used")).getText();
 						String limit= driver.findElement(By.cssSelector(".uploads .limit")).getText();
-						
+						String rj = driver.findElement(By.cssSelector(".rejected .number")).getText();
 						System.out.println(yesterdaySale);
 						System.out.println(yesterdayMoney);
 						System.out.println(todaySale);
@@ -126,6 +127,7 @@ public class Scheduler {
 						sale.setLimitslot(limit);
 						sale.setTier(tier);
 						sale.setCoutDesgin(Integer.parseInt(coutDesgin));
+						sale.setParam1(rj);
 						sale.setLast7dayMoney(Double.parseDouble(last7dayMoney));
 						sale.setThismonthMoney(Double.parseDouble(thismonthMoney));
 						sale.setPreviousmonthMoney(Double.parseDouble(previousmonthMoney));
@@ -160,12 +162,12 @@ public class Scheduler {
 							 sale.setLstimageMerch(lst);
 							 
 						} catch (Exception e) {
-							e.printStackTrace();
+							//e.printStackTrace();
 						}
 						//CallAPi callApi =new CallAPi();
 						String jsonString = objectMapper.writeValueAsString(sale);
 						 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
-						
+					
 					} catch (Exception e) {
 						
 						DateFormat df = new SimpleDateFormat("MM/dd/yy"); 
@@ -198,7 +200,7 @@ public class Scheduler {
 						sale.setStatus("0");
 						String jsonString = objectMapper.writeValueAsString(sale);
 						 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
-						
+						e.printStackTrace();
 						System.out.println("loi");
 						continue;
 						//e.printStackTrace();
