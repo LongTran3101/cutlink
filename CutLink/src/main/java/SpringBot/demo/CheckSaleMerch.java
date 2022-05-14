@@ -21,6 +21,7 @@ import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -95,6 +96,7 @@ public class CheckSaleMerch {
 			fw2.write("1");// appends the string to the file
 			fw2.close();
 			WebDriverManager.chromedriver().setup();
+			//WebDriverManager.chromedriver().
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<uploadFile> mechlst = objectMapper.readValue(req, new TypeReference<List<uploadFile>>() {
 			});
@@ -167,7 +169,7 @@ public class CheckSaleMerch {
 						options.addArguments("--disable-notifications");
 						options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 						options.addArguments(
-								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36");
+								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36");
 						options.addArguments("--no-sandbox");
 						options.addArguments("start-maximized");
 						options.addArguments("--no-sandbox");
@@ -177,6 +179,7 @@ public class CheckSaleMerch {
 						// options.AddExcludedArgument("enable-automation");
 						// options.AddAdditionalCapability("useAutomationExtension", false);
 						driver = new ChromeDriver(options);
+						
 					}
 					if (!mech.getNameAccount().toLowerCase().equalsIgnoreCase(nameacc.toLowerCase()) ) {
 						System.out.println("So Sanh khac name accout tao lại");
@@ -292,7 +295,7 @@ public class CheckSaleMerch {
 						options.addArguments("--disable-notifications");
 						options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 						options.addArguments(
-								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36");
+								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36");
 						options.addArguments("--no-sandbox");
 						options.addArguments("start-maximized");
 						options.addArguments("--no-sandbox");
@@ -302,6 +305,7 @@ public class CheckSaleMerch {
 						// options.AddExcludedArgument("enable-automation");
 						// options.AddAdditionalCapability("useAutomationExtension", false);
 						driver = new ChromeDriver(options);
+						
 
 					}
 
@@ -860,7 +864,7 @@ System.out.println("sau call api");
 			options.addArguments("--disable-notifications");
 			options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
 			options.addArguments(
-					"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.82 Safari/537.36");
+					"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36");
 			options.addArguments("--no-sandbox");
 			options.addArguments("start-maximized");
 			options.addArguments("--no-sandbox");
