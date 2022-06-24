@@ -29,6 +29,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.http.MediaType;
@@ -50,30 +51,34 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class CheckSaleMerch {
 	public static WebDriver driver;
 
-	@RequestMapping(value = "/uploadMerch", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	private String hello(@RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
-		try {
-
-			ObjectMapper objectMapper = new ObjectMapper();
-			uploadFile mech = objectMapper.readValue(req, uploadFile.class);
-			String link = "http://45.32.101.196:8080/download2?username=" + mech.getUsername() + "&imagename="
-					+ mech.getName().replaceAll(" ", "%20");
-			URL url = new URL(link);
-			InputStream in = new BufferedInputStream(url.openStream());
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			byte[] buf = new byte[1024];
-			int n = 0;
-			while (-1 != (n = in.read(buf))) {
-				out.write(buf, 0, n);
-			}
-			out.close();
-			in.close();
-			byte[] response = out.toByteArray();
-			String home = System.getProperty("user.home");
-			// File file = new File(home+"/Downloads/" + fileName + ".txt");
-			FileOutputStream fos = new FileOutputStream(home + "/Downloads/" + mech.getName());
-			fos.write(response);
-			fos.close();
+	@RequestMapping(value = "/uploadMerch")
+	private String hello( HttpServletRequest request, HttpServletResponse resp) {
+		try {WebDriverManager.chromedriver().setup();
+		ChromeOptions options2 = new ChromeOptions();
+		options2.addArguments("--headless");
+		 driver= new ChromeDriver(options2);
+		 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+		 String browserName = caps.getBrowserName();
+		 String browserVersion = caps.getVersion();
+		 System.out.println(browserName+" "+browserVersion);
+		 driver.close();
+		 ChromeOptions options = new ChromeOptions();
+			
+			//options.addArguments("--user-data-dir="+urlDataur);
+			//options.addArguments("--profile-directory="+nameProfile);
+	        options.addArguments("--disable-notifications");
+	        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
+	        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+browserVersion+" Safari/537.36");
+	        //options.addArguments("disable-extensions");
+	        options.addArguments("--no-sandbox");
+	        options.addArguments("--disable-web-security");
+	        options.addArguments("--disable-blink-features=AutomationControlled");
+	        options.addArguments("start-maximized"); 
+	        //options.AddExcludedArgument("enable-automation");
+	        //options.AddAdditionalCapability("useAutomationExtension", false);
+			 driver= new ChromeDriver(options);
+			driver.get("https://merch.amazon.com/dashboard");
+		///driver.get("https://merch.amazon.com/dashboard");
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -96,6 +101,14 @@ public class CheckSaleMerch {
 			fw2.write("1");// appends the string to the file
 			fw2.close();
 			WebDriverManager.chromedriver().setup();
+			ChromeOptions options2 = new ChromeOptions();
+			options2.addArguments("--headless");
+			 driver= new ChromeDriver(options2);
+			 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+			 String browserName = caps.getBrowserName();
+			 String browserVersion = caps.getVersion();
+			 System.out.println(browserName+" "+browserVersion);
+			 driver.close();
 			//WebDriverManager.chromedriver().
 			ObjectMapper objectMapper = new ObjectMapper();
 			List<uploadFile> mechlst = objectMapper.readValue(req, new TypeReference<List<uploadFile>>() {
@@ -168,16 +181,12 @@ public class CheckSaleMerch {
 						options.addArguments("--profile-directory=" + nameProfile);
 						options.addArguments("--disable-notifications");
 						options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
-						options.addArguments(
-								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36");
-						options.addArguments("--no-sandbox");
-						options.addArguments("start-maximized");
+						 options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+browserVersion+" Safari/537.36");
+						
 						options.addArguments("--no-sandbox");
 						options.addArguments("--disable-web-security");
 						options.addArguments("--disable-blink-features=AutomationControlled");
 						options.addArguments("start-maximized");
-						// options.AddExcludedArgument("enable-automation");
-						// options.AddAdditionalCapability("useAutomationExtension", false);
 						driver = new ChromeDriver(options);
 						
 					}
@@ -294,8 +303,7 @@ public class CheckSaleMerch {
 						options.addArguments("--profile-directory=" + nameProfile);
 						options.addArguments("--disable-notifications");
 						options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
-						options.addArguments(
-								"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36");
+						 options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+browserVersion+" Safari/537.36");
 						options.addArguments("--no-sandbox");
 						options.addArguments("start-maximized");
 						options.addArguments("--no-sandbox");
@@ -839,6 +847,16 @@ System.out.println("sau call api");
 			 * Gson gson = new GsonBuilder().disableHtmlEscaping().create(); AccountMerch
 			 * mech=gson.fromJson(req,AccountMerch.class);
 			 */
+			
+			WebDriverManager.chromedriver().setup();
+			ChromeOptions options2 = new ChromeOptions();
+			options2.addArguments("--headless");
+			 driver= new ChromeDriver(options2);
+			 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+			 String browserName = caps.getBrowserName();
+			 String browserVersion = caps.getVersion();
+			 System.out.println(browserName+" "+browserVersion);
+			 driver.close();
 			try {
 				 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
 				 p.waitFor();
@@ -857,14 +875,13 @@ System.out.println("sau call api");
 			String urlDataur = profile.substring(0, b + 1);
 			System.out.println(nameProfile);
 			System.out.println(urlDataur);
-			WebDriverManager.chromedriver().setup();
+			
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("--user-data-dir="+urlDataur);
 			options.addArguments("--profile-directory="+nameProfile);
 			options.addArguments("--disable-notifications");
 			options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
-			options.addArguments(
-					"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36");
+			 options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+browserVersion+" Safari/537.36");
 			options.addArguments("--no-sandbox");
 			options.addArguments("start-maximized");
 			options.addArguments("--no-sandbox");
@@ -894,12 +911,8 @@ System.out.println("sau call api");
 			String used= driver.findElement(By.cssSelector(".uploads .used")).getText();
 			String limit= driver.findElement(By.cssSelector(".uploads .limit")).getText();
 			String rj = driver.findElement(By.cssSelector(".rejected .number")).getText();
-			System.out.println(yesterdaySale);
-			System.out.println(yesterdayMoney);
-			System.out.println(todaySale);
-			System.out.println(todayMoney);
-			DateFormat df = new SimpleDateFormat("MM/dd/yy");
-			DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
+			//DateFormat df = new SimpleDateFormat("MM/dd/yy");
+			//DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd");
 			SaleMerch sale = new SaleMerch();
 			sale.setTier(tier);
 			sale.setLimitslot(limit);
@@ -914,8 +927,8 @@ System.out.println("sau call api");
 			sale.setThismonthSale(Integer.parseInt(thismonthSale));
 			sale.setPreviousmonthSale(Integer.parseInt(previousmonthSale));
 			sale.setAlltimeSale(Integer.parseInt(alltimeSale));
-			sale.setDayString(df2.format(df.parse(day)));
-			sale.setDay(df.parse(day));
+			//sale.setDayString(df2.format(df.parse(day)));
+			//sale.setDay(df.parse(day));
 			sale.setSale(Integer.parseInt(todaySale));
 			sale.setMoney(Double.parseDouble(todayMoney));
 			sale.setEmail(mech.getEmail());
@@ -945,6 +958,7 @@ System.out.println("sau call api");
 			CallAPi callApi = new CallAPi();
 			String jsonString = objectMapper.writeValueAsString(sale);
 			rep = callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
+			System.out.println("Thành công");
 
 		} catch (Exception e) {
 			System.out.println("loi");

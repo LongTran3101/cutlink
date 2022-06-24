@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -51,6 +53,15 @@ public class Scheduler {
 			String rep ="";
 			 rep =callApi.callAPIPost("http://45.32.101.196:8080/getallaccfromip", "");
 			 List<AccountMerch> mechlst = objectMapper.readValue(rep, new TypeReference<List<AccountMerch>>(){});
+			 WebDriverManager.chromedriver().setup();
+				ChromeOptions options2 = new ChromeOptions();
+				options2.addArguments("--headless");
+				 driver= new ChromeDriver(options2);
+				 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+				 String browserName = caps.getBrowserName();
+				 String browserVersion = caps.getVersion();
+				 System.out.println(browserName+" "+browserVersion);
+				 driver.close();
 			System.out.println(mechlst.size());
 			try {
 				 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
@@ -67,38 +78,39 @@ public class Scheduler {
 
 						/*Gson gson = new GsonBuilder().disableHtmlEscaping().create();
 						AccountMerch mech=gson.fromJson(req,AccountMerch.class);*/
+						
 						Thread.sleep(10000);
-						System.out.println("a");
-						System.out.println(mech.getDay());
+						//System.out.println("a");
+						//System.out.println(mech.getDay());
 						String profile=mech.getPath();
 						int b = profile.lastIndexOf("\\");
-						System.out.println(b);
+						//System.out.println(b);
 						String nameProfile=profile.substring(b+1);
 						String urlDataur=profile.substring(0, b+1);
-						System.out.println(nameProfile);
-						System.out.println(urlDataur);
-						WebDriverManager.chromedriver().setup();
+						System.out.println("bat dau check acc "+ mech.getName());
 						ChromeOptions options = new ChromeOptions();
-						
 						options.addArguments("--user-data-dir="+urlDataur);
 						options.addArguments("--profile-directory="+nameProfile);
 				        options.addArguments("--disable-notifications");
 				        options.setExperimentalOption("excludeSwitches", new String[]{"enable-automation"}); 
-				        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/101.0.4951.54 Safari/537.36");
-				        //options.addArguments("disable-extensions");
+				        options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+browserVersion+" Safari/537.36");
+				        options.addArguments("--no-sandbox");
+						options.addArguments("start-maximized");
 				        options.addArguments("--no-sandbox");
 				        options.addArguments("--disable-web-security");
 				        options.addArguments("--disable-blink-features=AutomationControlled");
 				        options.addArguments("start-maximized"); 
-				        //options.AddExcludedArgument("enable-automation");
-				        //options.AddAdditionalCapability("useAutomationExtension", false);
 						 driver= new ChromeDriver(options);
 						driver.get("https://merch.amazon.com/dashboard");
-						Thread.sleep(35000);
-						/*WebDriverWait wait = new WebDriverWait(driver, 50);
+						Thread.sleep(70000);
+						/*WebDriverWait wait = new WebDriverWait(driver, 20);
 						 wait.until(ExpectedConditions
-									.visibilityOfElementLocated(By.cssSelector(".yesterday")));*/
-						String yesterdaySale =driver.findElement(By.cssSelector(".yesterday .net-sales")).getText();
+									.visibilityOfElementLocated(By.cssSelector(".today")));*/
+						 String day= driver.findElement(By.cssSelector(".today .subtitle")).getText();
+							String used= driver.findElement(By.cssSelector(".uploads .used")).getText();
+							String limit= driver.findElement(By.cssSelector(".uploads .limit")).getText();
+							String rj = driver.findElement(By.cssSelector(".rejected .number")).getText();
+						
 						String todaySale = driver.findElement(By.cssSelector(".today-card .total-sales")).getText();
 						String todayMoney= driver.findElement(By.cssSelector(".royalties .number")).getText();
 						String yesterdayMoney= driver.findElement(By.cssSelector(".yesterday .number")).getText();
@@ -110,16 +122,10 @@ public class Scheduler {
 						String thismonthSale =driver.findElement(By.cssSelector(".this-month .net-sales")).getText();
 						String previousmonthMoney= driver.findElement(By.cssSelector(".previous-month .number")).getText();
 						String previousmonthSale =driver.findElement(By.cssSelector(".previous-month .net-sales")).getText();
+						String yesterdaySale =driver.findElement(By.cssSelector(".yesterday .net-sales")).getText();
 						String alltimeMoney= driver.findElement(By.cssSelector(".all-time .number")).getText();
 						String alltimeSale =driver.findElement(By.cssSelector(".all-time .net-sales")).getText();
-						String day= driver.findElement(By.cssSelector(".today .subtitle")).getText();
-						String used= driver.findElement(By.cssSelector(".uploads .used")).getText();
-						String limit= driver.findElement(By.cssSelector(".uploads .limit")).getText();
-						String rj = driver.findElement(By.cssSelector(".rejected .number")).getText();
-						System.out.println(yesterdaySale);
-						System.out.println(yesterdayMoney);
-						System.out.println(todaySale);
-						System.out.println(todayMoney);
+					
 						DateFormat df = new SimpleDateFormat("MM/dd/yy"); 
 						DateFormat df2 = new SimpleDateFormat("yyyy-MM-dd"); 
 						SaleMerch sale=new SaleMerch();
@@ -167,6 +173,8 @@ public class Scheduler {
 						//CallAPi callApi =new CallAPi();
 						String jsonString = objectMapper.writeValueAsString(sale);
 						 rep =callApi.callAPIPost("http://45.32.101.196:8080/saveCheckSale", jsonString);
+						 
+						 System.out.println("Thành công");
 					
 					} catch (Exception e) {
 						
@@ -215,6 +223,14 @@ public class Scheduler {
 							}
 							
 							//driver.close();
+						}
+						 try {
+							 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+							 p.waitFor();
+							Runtime.getRuntime().exec("taskkill /F /IM CHROME.exe");
+							 p.waitFor();
+						} catch (Exception e) {
+							// TODO: handle exception
 						}
 					}
 			}
