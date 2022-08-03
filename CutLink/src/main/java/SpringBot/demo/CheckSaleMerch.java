@@ -150,7 +150,7 @@ public class CheckSaleMerch {
 							fos.close();
 						} catch (Exception e) {
 							try {
-								mech.setStatus("5");
+								mech.setStatus("5" );
 								String jsonString = objectMapper.writeValueAsString(mech);
 								CallAPi callApi = new CallAPi();
 								String rep = callApi.callAPIPost("http://45.32.101.196:8080/saveImageUpLoad", jsonString);
@@ -159,7 +159,7 @@ public class CheckSaleMerch {
 							}
 							continue;
 						}
-					}
+					} 
 					
 
 					// System.out.println("a");

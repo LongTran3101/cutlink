@@ -70,7 +70,7 @@ public class Scheduler {
 				 p.waitFor();
 			} catch (Exception e) {
 				// TODO: handle exception
-			}
+			} 
 			Thread.sleep(1000);
 			 for (AccountMerch mech : mechlst) {
 				 try {
