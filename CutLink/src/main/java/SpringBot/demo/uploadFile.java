@@ -15,6 +15,11 @@ public class uploadFile {
 	private String profile;
 	private String typeTshirt;
 	private Integer idAccount;
+	private String typeTshirtPre;
+	private String pricePre;
+	private String maupre;
+	private String TypeShirtUpLoad;
+	
 	//private Integer idImage;
 	private String ip;
 	public String getNameuser() {
@@ -123,6 +128,30 @@ public class uploadFile {
 	}
 	public void setNameAccount(String nameAccount) {
 		this.nameAccount = nameAccount;
+	}
+	public String getTypeTshirtPre() {
+		return typeTshirtPre;
+	}
+	public void setTypeTshirtPre(String typeTshirtPre) {
+		this.typeTshirtPre = typeTshirtPre;
+	}
+	public String getPricePre() {
+		return pricePre;
+	}
+	public void setPricePre(String pricePre) {
+		this.pricePre = pricePre;
+	}
+	public String getMaupre() {
+		return maupre;
+	}
+	public void setMaupre(String maupre) {
+		this.maupre = maupre;
+	}
+	public String getTypeShirtUpLoad() {
+		return TypeShirtUpLoad;
+	}
+	public void setTypeShirtUpLoad(String typeShirtUpLoad) {
+		TypeShirtUpLoad = typeShirtUpLoad;
 	}
 	    
 }
