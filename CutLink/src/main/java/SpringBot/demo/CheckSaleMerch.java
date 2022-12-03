@@ -338,9 +338,23 @@ public class CheckSaleMerch {
 					jse.executeScript("arguments[0].click();", check2);
 					Thread.sleep(2000);
 					//driver.findElement(By.cssSelector(".STANDARD_TSHIRT-US")).click();
-					check2 =driver.findElement(By.cssSelector(".STANDARD_TSHIRT-US"));
-					jse.executeScript("arguments[0].click();", check2);
-					Thread.sleep(2000);
+					if(mech.getTypeShirtUpLoad().contains("1"))
+					{
+						check2 =driver.findElement(By.cssSelector(".STANDARD_TSHIRT-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					
+					if(mech.getTypeShirtUpLoad().contains("2"))
+					{
+						check2 =driver.findElement(By.cssSelector(".PREMIUM_TSHIRT-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					
+					
+					
+					
 					driver.findElement(By.cssSelector(".btn-submit")).click();
 					Thread.sleep(4000);
 
