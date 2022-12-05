@@ -356,6 +356,13 @@ public class CheckSaleMerch {
 						Thread.sleep(2000);
 					}
 					
+					if(mech.getTypeShirtUpLoad().contains("3"))
+					{
+						check2 =driver.findElement(By.cssSelector(".VNECK-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					
 					
 					
 					
@@ -392,6 +399,12 @@ public class CheckSaleMerch {
 					{
 						UploadFunction.uploadPreTshirt(driver, mech);
 					}
+					if(mech.getTypeShirtUpLoad().contains("3"))
+					{
+						UploadFunction.uploadVneck(driver, mech);
+					}
+					
+					
 					
 					
 					

@@ -3,13 +3,13 @@ package SpringBot.demo;
 import java.util.Date;
 
 public class uploadFile {
-	private Integer id; 
+	private Integer id;
 	private String name;
-	private  String username;
-	private  String status;
-	private  String title;
-	private  String brand;
-	private  String des1;
+	private String username;
+	private String status;
+	private String title;
+	private String brand;
+	private String des1;
 	private String des2;
 	private String mau;
 	private String profile;
@@ -19,139 +19,221 @@ public class uploadFile {
 	private String pricePre;
 	private String maupre;
 	private String TypeShirtUpLoad;
-	
-	//private Integer idImage;
+	private String priceVneck;
+
+	private String mauVneck;
+
+	private String priceTank;
+
+	private String mauTank;
+
+	public String getPriceVneck() {
+		return priceVneck;
+	}
+
+	public void setPriceVneck(String priceVneck) {
+		this.priceVneck = priceVneck;
+	}
+
+	public String getMauVneck() {
+		return mauVneck;
+	}
+
+	public void setMauVneck(String mauVneck) {
+		this.mauVneck = mauVneck;
+	}
+
+	// private Integer idImage;
 	private String ip;
+
 	public String getNameuser() {
 		return nameuser;
 	}
+
 	public void setNameuser(String nameuser) {
 		this.nameuser = nameuser;
 	}
+
 	private Date day;
 	private String nameAccount;
 	private String price;
 
 	private String nameuser;
+
 	public String getPrice() {
 		return price;
 	}
+
 	public void setPrice(String price) {
 		this.price = price;
 	}
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getStatus() {
 		return status;
 	}
+
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 	public String getTitle() {
 		return title;
 	}
+
 	public void setTitle(String title) {
 		this.title = title;
 	}
+
 	public String getBrand() {
 		return brand;
 	}
+
 	public void setBrand(String brand) {
 		this.brand = brand;
 	}
+
 	public String getDes1() {
 		return des1;
 	}
+
 	public void setDes1(String des1) {
 		this.des1 = des1;
 	}
+
 	public String getDes2() {
 		return des2;
 	}
+
 	public void setDes2(String des2) {
 		this.des2 = des2;
 	}
+
 	public String getMau() {
 		return mau;
 	}
+
 	public void setMau(String mau) {
 		this.mau = mau;
 	}
+
 	public String getProfile() {
 		return profile;
 	}
+
 	public void setProfile(String profile) {
 		this.profile = profile;
 	}
+
 	public String getTypeTshirt() {
 		return typeTshirt;
 	}
+
 	public void setTypeTshirt(String typeTshirt) {
 		this.typeTshirt = typeTshirt;
 	}
+
 	public Integer getIdAccount() {
 		return idAccount;
 	}
+
 	public void setIdAccount(Integer idAccount) {
 		this.idAccount = idAccount;
 	}
+
 	public String getIp() {
 		return ip;
 	}
+
 	public void setIp(String ip) {
 		this.ip = ip;
 	}
+
 	public Date getDay() {
 		return day;
 	}
+
 	public void setDay(Date day) {
 		this.day = day;
 	}
+
 	public String getNameAccount() {
 		return nameAccount;
 	}
+
 	public void setNameAccount(String nameAccount) {
 		this.nameAccount = nameAccount;
 	}
+
 	public String getTypeTshirtPre() {
 		return typeTshirtPre;
 	}
+
 	public void setTypeTshirtPre(String typeTshirtPre) {
 		this.typeTshirtPre = typeTshirtPre;
 	}
+
 	public String getPricePre() {
 		return pricePre;
 	}
+
 	public void setPricePre(String pricePre) {
 		this.pricePre = pricePre;
 	}
+
 	public String getMaupre() {
 		return maupre;
 	}
+
 	public void setMaupre(String maupre) {
 		this.maupre = maupre;
 	}
+
 	public String getTypeShirtUpLoad() {
 		return TypeShirtUpLoad;
 	}
+
 	public void setTypeShirtUpLoad(String typeShirtUpLoad) {
 		TypeShirtUpLoad = typeShirtUpLoad;
 	}
-	    
+
+	public String getPriceTank() {
+		return priceTank;
+	}
+
+	public void setPriceTank(String priceTank) {
+		this.priceTank = priceTank;
+	}
+
+	public String getMauTank() {
+		return mauTank;
+	}
+
+	public void setMauTank(String mauTank) {
+		this.mauTank = mauTank;
+	}
+
 }

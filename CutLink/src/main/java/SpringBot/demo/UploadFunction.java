@@ -12,6 +12,217 @@ import org.openqa.selenium.WebElement;
 
 public class UploadFunction {
 	
+public static void uploadTank(WebDriver driver,uploadFile mech ) throws Exception {
+		
+		System.out.println("UPLOAD Tank");
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		Thread.sleep(5000);
+		WebElement elembedit =driver.findElement(By.cssSelector(".TANK_TOP-edit-btn"));
+		elembedit.sendKeys(Keys.ENTER);
+		System.out.println(mech.getMauTank());
+		Thread.sleep(4000);
+		List<String> lstmau = Stream.of(mech.getMauVneck().split(",", -1)).collect(Collectors.toList());
+		if (lstmau.contains("1")) {
+			/*System.out.println("Co click");
+			driver.findElement(By.cssSelector(".asphalt-checkbox")).click();*/
+			
+			WebElement check =driver.findElement(By.cssSelector(".baby_blue-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+
+		Thread.sleep(1000);
+
+		if (!lstmau.contains("2")) {
+			/*System.out.println("Co click baby_blue-checkbox");
+			driver.findElement(By.cssSelector(".baby_blue-checkbox")).click();*/
+			WebElement check =driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+
+		Thread.sleep(1000);
+
+		if (!lstmau.contains("3")) {
+		/*	System.out.println("Co click black-checkbox");
+			driver.findElement(By.cssSelector(".black-checkbox")).click();*/
+			WebElement check =driver.findElement(By.cssSelector(".dark_heather-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("4")) {
+			/*System.out.println("Co click");
+			driver.findElement(By.cssSelector(".cranberry-checkbox")).click();*/
+			WebElement check =driver.findElement(By.cssSelector(".forest_green-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("5")) {
+			//System.out.println("Co click");
+			WebElement check =driver.findElement(By.cssSelector(".heather_grey-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+			//driver.findElement(By.cssSelector(".heather_grey-checkbox")).click();
+
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("6")) {
+
+			WebElement check =driver.findElement(By.cssSelector(".navy-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+			//driver.findElement(By.cssSelector(".kelly_green-checkbox")).click();
+
+		}
+
+		Thread.sleep(1000);
+
+		if (lstmau.contains("7")) {
+			//System.out.println("Co click");
+			//driver.findElement(By.cssSelector(".lemon-checkbox")).click();
+			WebElement check =driver.findElement(By.cssSelector(".pink-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("8")) {
+			WebElement check =driver.findElement(By.cssSelector(".purple-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("9")) {
+
+			//driver.findElement(By.cssSelector(".olive-checkbox")).click();
+			WebElement check =driver.findElement(By.cssSelector(".red-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("10")) {
+			WebElement check =driver.findElement(By.cssSelector(".sapphire-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+
+		Thread.sleep(1000);
+		Thread.sleep(2000);
+		WebElement price = driver.findElement(By.cssSelector("input[formcontrolname='amount']"));
+		price.sendKeys(Keys.CONTROL + "a");
+		price.sendKeys(Keys.DELETE);
+		price.sendKeys(mech.getPriceTank());
+		Thread.sleep(2000);
+	}	
+	
+	
+	
+public static void uploadVneck(WebDriver driver,uploadFile mech ) throws Exception {
+		
+		System.out.println("UPLOAD Vneck");
+		JavascriptExecutor jse = (JavascriptExecutor)driver;
+		Thread.sleep(5000);
+		WebElement elembedit =driver.findElement(By.cssSelector(".VNECK-edit-btn"));
+		elembedit.sendKeys(Keys.ENTER);
+		System.out.println(mech.getMauVneck());
+		Thread.sleep(4000);
+		List<String> lstmau = Stream.of(mech.getMauVneck().split(",", -1)).collect(Collectors.toList());
+		if (lstmau.contains("1")) {
+			/*System.out.println("Co click");
+			driver.findElement(By.cssSelector(".asphalt-checkbox")).click();*/
+			
+			WebElement check =driver.findElement(By.cssSelector(".baby_blue-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+
+		Thread.sleep(1000);
+
+		if (!lstmau.contains("2")) {
+			/*System.out.println("Co click baby_blue-checkbox");
+			driver.findElement(By.cssSelector(".baby_blue-checkbox")).click();*/
+			WebElement check =driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+
+		Thread.sleep(1000);
+
+		if (!lstmau.contains("3")) {
+		/*	System.out.println("Co click black-checkbox");
+			driver.findElement(By.cssSelector(".black-checkbox")).click();*/
+			WebElement check =driver.findElement(By.cssSelector(".dark_heather-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("4")) {
+			/*System.out.println("Co click");
+			driver.findElement(By.cssSelector(".cranberry-checkbox")).click();*/
+			WebElement check =driver.findElement(By.cssSelector(".forest_green-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("5")) {
+			//System.out.println("Co click");
+			WebElement check =driver.findElement(By.cssSelector(".heather_grey-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+			//driver.findElement(By.cssSelector(".heather_grey-checkbox")).click();
+
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("6")) {
+
+			WebElement check =driver.findElement(By.cssSelector(".navy-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+			//driver.findElement(By.cssSelector(".kelly_green-checkbox")).click();
+
+		}
+
+		Thread.sleep(1000);
+
+		if (lstmau.contains("7")) {
+			//System.out.println("Co click");
+			//driver.findElement(By.cssSelector(".lemon-checkbox")).click();
+			WebElement check =driver.findElement(By.cssSelector(".pink-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("8")) {
+			WebElement check =driver.findElement(By.cssSelector(".purple-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("9")) {
+
+			//driver.findElement(By.cssSelector(".olive-checkbox")).click();
+			WebElement check =driver.findElement(By.cssSelector(".red-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+		Thread.sleep(1000);
+
+		if (lstmau.contains("10")) {
+			WebElement check =driver.findElement(By.cssSelector(".sapphire-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+
+		Thread.sleep(1000);
+		Thread.sleep(2000);
+		WebElement price = driver.findElement(By.cssSelector("input[formcontrolname='amount']"));
+		price.sendKeys(Keys.CONTROL + "a");
+		price.sendKeys(Keys.DELETE);
+		price.sendKeys(mech.getPriceVneck());
+		Thread.sleep(2000);
+	}	
+	
+	
 public static void uploadPreTshirt(WebDriver driver,uploadFile mech ) throws Exception {
 		
 		System.out.println("UPLOAD FILE PRE");
