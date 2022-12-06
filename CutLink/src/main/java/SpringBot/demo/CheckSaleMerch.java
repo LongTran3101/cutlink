@@ -362,7 +362,30 @@ public class CheckSaleMerch {
 						jse.executeScript("arguments[0].click();", check2);
 						Thread.sleep(2000);
 					}
-					
+					if(mech.getTypeShirtUpLoad().contains("4"))
+					{
+						check2 =driver.findElement(By.cssSelector(".TANK_TOP-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					if(mech.getTypeShirtUpLoad().contains("5"))
+					{
+						check2 =driver.findElement(By.cssSelector(".STANDARD_LONG_SLEEVE-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					if(mech.getTypeShirtUpLoad().contains("6"))
+					{
+						check2 =driver.findElement(By.cssSelector(".RAGLAN-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					if(mech.getTypeShirtUpLoad().contains("7"))
+					{
+						check2 =driver.findElement(By.cssSelector(".STANDARD_SWEATSHIRT-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
 					
 					
 					
@@ -403,6 +426,24 @@ public class CheckSaleMerch {
 					{
 						UploadFunction.uploadVneck(driver, mech);
 					}
+					if(mech.getTypeShirtUpLoad().contains("4"))
+					{
+						UploadFunction.uploadTank(driver, mech);
+					}
+					if(mech.getTypeShirtUpLoad().contains("5"))
+					{
+						UploadFunction.uploadLong(driver, mech);
+					}
+					if(mech.getTypeShirtUpLoad().contains("6"))
+					{
+						UploadFunction.uploadRaglan(driver, mech);
+					}
+					if(mech.getTypeShirtUpLoad().contains("7"))
+					{
+						UploadFunction.uploadSweat(driver, mech);
+					}
+					
+					
 					
 					
 					
