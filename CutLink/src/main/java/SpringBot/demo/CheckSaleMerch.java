@@ -387,6 +387,14 @@ public class CheckSaleMerch {
 						Thread.sleep(2000);
 					}
 					
+					if(mech.getTypeShirtUpLoad().contains("8"))
+					{
+						check2 =driver.findElement(By.cssSelector(".STANDARD_PULLOVER_HOODIE-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					
+					
 					
 					
 					driver.findElement(By.cssSelector(".btn-submit")).click();
@@ -441,6 +449,10 @@ public class CheckSaleMerch {
 					if(mech.getTypeShirtUpLoad().contains("7"))
 					{
 						UploadFunction.uploadSweat(driver, mech);
+					}
+					if(mech.getTypeShirtUpLoad().contains("8"))
+					{
+						UploadFunction.uploadPullover(driver, mech);
 					}
 					
 					

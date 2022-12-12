@@ -34,6 +34,11 @@ public class uploadFile {
 
 	private String priceSweat;
 	
+	private String pricePullover;
+	private String mauPullover;
+	private String priceZip;
+	private String mauZip;
+	
 
 	public String getPriceVneck() {
 		return priceVneck;
@@ -282,6 +287,38 @@ public class uploadFile {
 
 	public void setPriceSweat(String priceSweat) {
 		this.priceSweat = priceSweat;
+	}
+
+	public String getPricePullover() {
+		return pricePullover;
+	}
+
+	public void setPricePullover(String pricePullover) {
+		this.pricePullover = pricePullover;
+	}
+
+	public String getMauPullover() {
+		return mauPullover;
+	}
+
+	public void setMauPullover(String mauPullover) {
+		this.mauPullover = mauPullover;
+	}
+
+	public String getPriceZip() {
+		return priceZip;
+	}
+
+	public void setPriceZip(String priceZip) {
+		this.priceZip = priceZip;
+	}
+
+	public String getMauZip() {
+		return mauZip;
+	}
+
+	public void setMauZip(String mauZip) {
+		this.mauZip = mauZip;
 	}
 
 }
