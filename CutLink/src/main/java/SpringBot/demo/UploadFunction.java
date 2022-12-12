@@ -329,11 +329,8 @@ public class UploadFunction {
 
 		Thread.sleep(1000);
 
-		if (!lstmau.contains("3")) {
-			/*
-			 * System.out.println("Co click black-checkbox");
-			 * driver.findElement(By.cssSelector(".black-checkbox")).click();
-			 */
+		if (lstmau.contains("3")) {
+			
 			WebElement check = driver.findElement(By.cssSelector(".navy-checkbox"));
 			jse.executeScript("arguments[0].click();", check);
 		}
