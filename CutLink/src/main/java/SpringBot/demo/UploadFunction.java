@@ -43,15 +43,7 @@ public class UploadFunction {
 
 		Thread.sleep(1000);
 
-		if (!lstmau.contains("3")) {
-			/*
-			 * System.out.println("Co click black-checkbox");
-			 * driver.findElement(By.cssSelector(".black-checkbox")).click();
-			 */
-			WebElement check = driver.findElement(By.cssSelector(".navy-checkbox"));
-			jse.executeScript("arguments[0].click();", check);
-		}
-		Thread.sleep(1000);
+		
 
 		if (lstmau.contains("4")) {
 			/*
@@ -94,6 +86,15 @@ public class UploadFunction {
 			// driver.findElement(By.cssSelector(".heather_grey-checkbox")).click();
 
 		}
+		if (!lstmau.contains("3")) {
+			/*
+			 * System.out.println("Co click black-checkbox");
+			 * driver.findElement(By.cssSelector(".black-checkbox")).click();
+			 */
+			WebElement check = driver.findElement(By.cssSelector(".navy-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+		Thread.sleep(1000);
 		Thread.sleep(1000);
 
 		Thread.sleep(1000);
@@ -116,16 +117,7 @@ public class UploadFunction {
 		System.out.println(mech.getMauPullover());
 		Thread.sleep(4000);
 		List<String> lstmau = Stream.of(mech.getMauPullover().split(",", -1)).collect(Collectors.toList());
-		if (!lstmau.contains("1")) {
-			/*
-			 * System.out.println("Co click");
-			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
-			 */
-
-			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
-			jse.executeScript("arguments[0].click();", check);
-
-		}
+		
 
 		Thread.sleep(1000);
 
@@ -169,6 +161,16 @@ public class UploadFunction {
 
 		}
 		Thread.sleep(1000);
+		if (!lstmau.contains("1")) {
+			/*
+			 * System.out.println("Co click");
+			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
+			 */
+
+			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
 
 		Thread.sleep(1000);
 		Thread.sleep(2000);
@@ -190,18 +192,7 @@ public class UploadFunction {
 		System.out.println(mech.getMauSweat());
 		Thread.sleep(4000);
 		List<String> lstmau = Stream.of(mech.getMauSweat().split(",", -1)).collect(Collectors.toList());
-		if (!lstmau.contains("1")) {
-			/*
-			 * System.out.println("Co click");
-			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
-			 */
-
-			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
-			jse.executeScript("arguments[0].click();", check);
-
-		}
-
-		Thread.sleep(1000);
+		
 
 		if (lstmau.contains("2")) {
 			/*
@@ -243,6 +234,17 @@ public class UploadFunction {
 
 		}
 		Thread.sleep(1000);
+		if (!lstmau.contains("1")) {
+			/*
+			 * System.out.println("Co click");
+			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
+			 */
+
+			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
+
 
 		Thread.sleep(1000);
 		Thread.sleep(2000);
@@ -304,16 +306,7 @@ public class UploadFunction {
 		System.out.println(mech.getMauLong());
 		Thread.sleep(4000);
 		List<String> lstmau = Stream.of(mech.getMauLong().split(",", -1)).collect(Collectors.toList());
-		if (!lstmau.contains("1")) {
-			/*
-			 * System.out.println("Co click");
-			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
-			 */
-
-			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
-			jse.executeScript("arguments[0].click();", check);
-
-		}
+	
 
 		Thread.sleep(1000);
 
@@ -354,7 +347,16 @@ public class UploadFunction {
 
 		}
 		Thread.sleep(1000);
+		if (!lstmau.contains("1")) {
+			/*
+			 * System.out.println("Co click");
+			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
+			 */
 
+			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
 		Thread.sleep(1000);
 		Thread.sleep(2000);
 		WebElement price = driver.findElement(By.cssSelector("input[formcontrolname='amount']"));
@@ -374,16 +376,7 @@ public class UploadFunction {
 		System.out.println(mech.getMauTank());
 		Thread.sleep(4000);
 		List<String> lstmau = Stream.of(mech.getMauTank().split(",", -1)).collect(Collectors.toList());
-		if (!lstmau.contains("1")) {
-			/*
-			 * System.out.println("Co click");
-			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
-			 */
-
-			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
-			jse.executeScript("arguments[0].click();", check);
-
-		}
+		
 
 		Thread.sleep(1000);
 
@@ -466,6 +459,16 @@ public class UploadFunction {
 			WebElement check = driver.findElement(By.cssSelector(".white-checkbox"));
 			jse.executeScript("arguments[0].click();", check);
 		}
+		if (!lstmau.contains("1")) {
+			/*
+			 * System.out.println("Co click");
+			 * driver.findElement(By.cssSelector(".asphalt-checkbox")).click();
+			 */
+
+			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
 
 		Thread.sleep(1000);
 		Thread.sleep(2000);
@@ -499,15 +502,7 @@ public class UploadFunction {
 
 		Thread.sleep(1000);
 
-		if (!lstmau.contains("2")) {
-			/*
-			 * System.out.println("Co click baby_blue-checkbox");
-			 * driver.findElement(By.cssSelector(".baby_blue-checkbox")).click();
-			 */
-			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
-			jse.executeScript("arguments[0].click();", check);
-
-		}
+		
 
 		Thread.sleep(1000);
 
@@ -578,6 +573,15 @@ public class UploadFunction {
 			WebElement check = driver.findElement(By.cssSelector(".sapphire-checkbox"));
 			jse.executeScript("arguments[0].click();", check);
 		}
+		if (!lstmau.contains("2")) {
+			/*
+			 * System.out.println("Co click baby_blue-checkbox");
+			 * driver.findElement(By.cssSelector(".baby_blue-checkbox")).click();
+			 */
+			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+
+		}
 
 		Thread.sleep(1000);
 		Thread.sleep(2000);
@@ -627,18 +631,6 @@ public class UploadFunction {
 
 		}
 
-		Thread.sleep(1000);
-
-		if (!lstmau.contains("3")) {
-			/*
-			 * System.out.println("Co click black-checkbox");
-			 * driver.findElement(By.cssSelector(".black-checkbox")).click();
-			 */
-			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
-			jse.executeScript("arguments[0].click();", check);
-		}
-
-		System.out.println("sau blackcheckbox");
 		Thread.sleep(1000);
 
 		if (lstmau.contains("4")) {
@@ -832,6 +824,16 @@ public class UploadFunction {
 			jse.executeScript("arguments[0].click();", check);
 
 		}
+		Thread.sleep(1000);
+		if (!lstmau.contains("3")) {
+			/*
+			 * System.out.println("Co click black-checkbox");
+			 * driver.findElement(By.cssSelector(".black-checkbox")).click();
+			 */
+			WebElement check = driver.findElement(By.cssSelector(".black-checkbox"));
+			jse.executeScript("arguments[0].click();", check);
+		}
+
 		
 		System.out.println(mech.getTypeTshirtPre());
 		List<String> typetshirt = Stream.of(mech.getTypeTshirt().split(",", -1)).collect(Collectors.toList());
