@@ -394,6 +394,13 @@ public class CheckSaleMerch {
 						Thread.sleep(2000);
 					}
 					
+					if(mech.getTypeShirtUpLoad().contains("9"))
+					{
+						check2 =driver.findElement(By.cssSelector(".ZIP_HOODIE-US"));
+						jse.executeScript("arguments[0].click();", check2);
+						Thread.sleep(2000);
+					}
+					
 					
 					
 					
@@ -454,14 +461,13 @@ public class CheckSaleMerch {
 					{
 						UploadFunction.uploadPullover(driver, mech);
 					}
+					if(mech.getTypeShirtUpLoad().contains("9"))
+					{
+						UploadFunction.uploadZip(driver, mech);
+					}
 					
 					
-					
-					
-					
-					
-					
-					
+					Thread.sleep(2000);
 					WebElement title = driver.findElement(By.cssSelector("#designCreator-productEditor-title"));
 					title.sendKeys(Keys.CONTROL + "a");
 					title.sendKeys(Keys.DELETE);
