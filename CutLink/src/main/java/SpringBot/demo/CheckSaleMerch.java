@@ -326,10 +326,10 @@ public class CheckSaleMerch {
 					driver.get("https://merch.amazon.com/designs/new");
 					Thread.sleep(20000);
 					
-					wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#select-marketplace-button")));
-					WebElement elembtn =driver.findElement(By.cssSelector("#select-marketplace-button"));
+					wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#select-marketplace-button-original")));
+					WebElement elembtn =driver.findElement(By.cssSelector("#select-marketplace-button-original"));
 					elembtn.sendKeys(Keys.ENTER);
-					//driver.findElement(By.cssSelector("#select-marketplace-button")).click();
+					//driver.findElement(By.cssSelector("#select-marketplace-button-original")).click();
 					System.out.println("sua click 2 lan");
 					Thread.sleep(4000);
 					
