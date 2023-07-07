@@ -1,5 +1,6 @@
 package SpringBot.demo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class ImageMerch {
@@ -8,6 +9,20 @@ public class ImageMerch {
 	private String url;
 	private Date day;
 	private String acc;
+	private BigDecimal royaltie;
+	private int sold;
+	public BigDecimal getRoyaltie() {
+		return royaltie;
+	}
+	public void setRoyaltie(BigDecimal royaltie) {
+		this.royaltie = royaltie;
+	}
+	public int getSold() {
+		return sold;
+	}
+	public void setSold(int sold) {
+		this.sold = sold;
+	}
 	public Integer getId() {
 		return id;
 	}
