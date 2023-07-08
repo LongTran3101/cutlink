@@ -1,5 +1,7 @@
 package SpringBot.demo;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,12 +27,36 @@ public class Maintesst {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
+		List<Product> lsrPro=new ArrayList<>();
+		Product pro = new Product();
+		pro.setAsin("123");
+		pro.setAcc(123);
+		pro.setBrand("123");
+		pro.setMkt("123");
+		pro.setTypeProduct("123");
+		pro.setCreateDate(new Date());
+		pro.setPrice("123");
+		pro.setStatus("123");
+		pro.setIp("123");
+		pro.setPathProfile("123");
+		pro.setTitle("123");
+		pro.setUrlPreview("123");
+		lsrPro.add(pro);
+		ListPoductDTO listPoductDTO=new ListPoductDTO();
+		listPoductDTO.setList(lsrPro);
+		ObjectMapper objectMapper = new ObjectMapper();
+		try {
+			String jsonString = objectMapper.writeValueAsString(listPoductDTO);
+			System.out.println(jsonString);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
 		
 		
 		String json="{\"dailyProduct\":{\"count\":0,\"limit\":200},\"overallProduct\":{\"count\":499,\"limit\":33000},\"overallDesign\":{\"count\":428,\"limit\":500}}";
 		
-		ObjectMapper objectMapper = new ObjectMapper();
+		
 		
 		
 		try {

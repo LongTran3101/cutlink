@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -16,23 +17,25 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FunctionCheckSale {
-	public void checkDesign( WebDriver driver) {
+	public void checkDesign(WebDriver driver,AccountMerch mech) {
 		try {
+			String rep = "";
+			CallAPi callApi = new CallAPi();
+			DateFormat df = new SimpleDateFormat("MM/dd/yy");
+			List<Product> lsrPro=new ArrayList<>();
 			System.out.println("start get design");
 			driver.get("https://merch.amazon.com/api/ratelimiter/metadata");
-			String metaJson=	driver.findElement(By.tagName("body")).getText();
+			String metaJson = driver.findElement(By.tagName("body")).getText();
 			System.out.println(metaJson);
 			ObjectMapper objectMapper = new ObjectMapper();
 			Meta dto = objectMapper.readValue(metaJson, Meta.class);
-			int count=dto.getOverallProduct().getCount()/250;
-			int phandu=dto.getOverallProduct().getCount() % 250;
-			if(phandu==0)
-			{
-				count=count-1;
+			int count = dto.getOverallProduct().getCount() / 250;
+			int phandu = dto.getOverallProduct().getCount() % 250;
+			if (phandu == 0) {
+				count = count - 1;
 			}
-			if(dto.getOverallProduct().getCount()<=250)
-			{
-				count=0;
+			if (dto.getOverallProduct().getCount() <= 250) {
+				count = 0;
 			}
 			System.out.println(count + "  ---  count");
 			Thread.sleep(2000);
@@ -43,31 +46,70 @@ public class FunctionCheckSale {
 			driver.findElement(By.cssSelector("#page-size-250")).click();
 			Thread.sleep(6000);
 			List<WebElement> listelement = driver.findElements(By.cssSelector(".table tr"));
-			System.out.println(listelement.size() +"-----listelement ");
+			System.out.println(listelement.size() + "-----listelement ");
 			for (WebElement webElement : listelement) {
-				WebElement link=webElement.findElement(By.cssSelector("a"));
-				WebElement img=webElement.findElement(By.cssSelector("img"));
-				WebElement mkt = webElement.findElement(By.xpath("//td[0]"));
-				System.out.println(mkt.getText() + " --mkt");
-				WebElement brand = webElement.findElement(By.xpath("//td[2]"));
-				System.out.println(brand.getText()+" --- brand");
-				WebElement type = webElement.findElement(By.xpath("//td[3]"));
-				System.out.println( type.getText()+" ---  type");
-				WebElement timeCreate = webElement.findElement(By.xpath("//td[4]"));
-				System.out.println( timeCreate.getText()+" ---  timeCreate");
-				WebElement Price = webElement.findElement(By.xpath("//td[5]"));
-				System.out.println( Price.getText()+" ---  Price");
-				WebElement Status = webElement.findElement(By.xpath("//td6]"));
-				System.out.println( Status.getText()+" ---  Status");
+				WebElement link = webElement.findElement(By.cssSelector("a"));
+				WebElement img = webElement.findElement(By.cssSelector("img"));
+				List<WebElement> lstTD = driver.findElements(By.cssSelector("td"));
 				
-				
+					Product pro = new Product();
+					String linkHr=link.getAttribute("href");
+					int x=linkHr.lastIndexOf("/");
+					String b=linkHr.substring(x+1);
+					pro.setAsin(b);
+					pro.setAcc(mech.getId());
+					pro.setBrand(lstTD.get(2).getText());
+					pro.setMkt(lstTD.get(0).getText());
+					pro.setTypeProduct(lstTD.get(3).getText());
+					pro.setCreateDate(df.parse(lstTD.get(4).getText()));
+					pro.setPrice(lstTD.get(5).getText());
+					pro.setStatus(lstTD.get(6).getText());
+					pro.setIp(mech.getIp());
+					pro.setPathProfile(mech.getPath());
+					pro.setTitle(link.getText());
+					pro.setUrlPreview(img.getAttribute("src"));
+					lsrPro.add(pro);
+					
+					
+//
+//				WebElement mkt = webElement.findElement(By.xpath("//td[0]"));
+//				System.out.println(mkt.getText() + " --mkt");
+//				WebElement brand = webElement.findElement(By.xpath("//td[2]"));
+//				System.out.println(brand.getText()+" --- brand");
+//				WebElement type = webElement.findElement(By.xpath("//td[3]"));
+//				System.out.println( type.getText()+" ---  type");
+//				WebElement timeCreate = webElement.findElement(By.xpath("//td[4]"));
+//				System.out.println( timeCreate.getText()+" ---  timeCreate");
+//				WebElement Price = webElement.findElement(By.xpath("//td[5]"));
+//				System.out.println( Price.getText()+" ---  Price");
+//				WebElement Status = webElement.findElement(By.xpath("//td6]"));
+//				System.out.println( Status.getText()+" ---  Status");
+
 			}
 			
+			ListPoductDTO listPoductDTO=new ListPoductDTO();
+			listPoductDTO.setList(lsrPro);
+			String jsonString = objectMapper.writeValueAsString(listPoductDTO);
+			rep = callApi.callAPIPost("http://45.32.101.196:8080/saveProduct", jsonString);
+			
+		
+//			System.out.println( lsrPro.get(0).getMkt()+ " --mkt");
+//			
+//			System.out.println(lsrPro.get(0).getBrand()+" --- brand");
+//		
+//			System.out.println( lsrPro.get(0).getTypeProduct()+" ---  type");
+//			
+//			System.out.println(lsrPro.get(0).getCreateDate().toString()+" ---  timeCreate");
+//			
+//			System.out.println( lsrPro.get(0).getPrice()+" ---  Price");
+//			
+//			System.out.println( lsrPro.get(0).getStatus()+" ---  Status");
+
 		} catch (Exception e) {
 			System.out.println("Loi lay list design");
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public void checkSaleAccount(uploadFile mech, WebDriver driver) {
@@ -425,10 +467,8 @@ public class FunctionCheckSale {
 			options.addArguments("--disable-blink-features=AutomationControlled");
 			options.addArguments("start-maximized");
 			driver = new ChromeDriver(options);
-			checkDesign(driver);
-			
-			
-			
+			checkDesign(driver,mech);
+
 			driver.get("https://merch.amazon.com/dashboard");
 			Thread.sleep(70000);
 			/*
