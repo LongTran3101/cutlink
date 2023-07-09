@@ -92,6 +92,193 @@ public class CheckSaleMerch {
 	}
 	
 	
+	@RequestMapping(value = "/deleteproduct", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	private String deleteproduct(@RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
+		try {
+
+			// String filename = PathLocal + "./key.txt";
+			FileWriter fw = new FileWriter("log.txt"); // the true will append the new data
+			fw.write("");// appends the string to the file
+			fw.close();
+			FileWriter fw2 = new FileWriter("log.txt"); // the true will append the new data
+			fw2.write("1");// appends the string to the file
+			fw2.close();
+			WebDriverManager.chromedriver().setup();
+			ChromeOptions options2 = new ChromeOptions();
+			options2.addArguments("--headless");
+			 driver= new ChromeDriver(options2);
+			 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+			 String browserName = caps.getBrowserName();
+			 String browserVersion = caps.getVersion();
+			 System.out.println(browserName+" "+browserVersion);
+			 driver.close();
+			//WebDriverManager.chromedriver().
+			ObjectMapper objectMapper = new ObjectMapper();
+			List<Product> mechlst = objectMapper.readValue(req, new TypeReference<List<Product>>() {
+			});
+			try {
+				 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+				 p.waitFor();
+				Runtime.getRuntime().exec("taskkill /F /IM CHROME.exe");
+				 p.waitFor();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+			Thread.sleep(1000);
+			String nameacc = "";
+			Product uploadold=new Product();
+			for (Product mech : mechlst) {
+				try {
+					String home = System.getProperty("user.home");
+					
+					if (driver == null) {
+						nameacc = mech.getAccName();
+						uploadold=mech;
+						String profile = mech.getPathProfile();
+						int b = profile.lastIndexOf("\\");
+						// System.out.println(b);
+						String nameProfile = profile.substring(b + 1);
+						String urlDataur = profile.substring(0, b + 1);
+						// System.out.println(nameProfile);
+						// System.out.println(urlDataur);
+
+						ChromeOptions options = new ChromeOptions();
+
+						options.addArguments("--user-data-dir=" + urlDataur);
+						options.addArguments("--profile-directory=" + nameProfile);
+						options.addArguments("--disable-notifications");
+						options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
+						 options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+browserVersion+" Safari/537.36");
+						
+						options.addArguments("--no-sandbox");
+						options.addArguments("--disable-web-security");
+						options.addArguments("--disable-blink-features=AutomationControlled");
+						options.addArguments("start-maximized");
+						driver = new ChromeDriver(options);
+						driver.get("https://merch.amazon.com/manage/designs");
+						Thread.sleep(20000);
+						driver.findElement(By.cssSelector("#page-size-selector")).click();
+						Thread.sleep(2000);
+						driver.findElement(By.cssSelector("#page-size-250")).click();
+						Thread.sleep(6000);
+						
+					}
+					if (!mech.getAccName().toLowerCase().equalsIgnoreCase(nameacc.toLowerCase()) ) {
+						System.out.println("So Sanh khac name accout tao lại");
+						System.out.println(mech.getAccName() +"   name accout");
+						System.out.println(nameacc +"   nameacc");
+						
+						
+						System.out.println("check sale trc khi doi acc");
+						FunctionCheckSale functionCheckSale=new FunctionCheckSale();
+						//functionCheckSale.checkDesign(driver, mech, browserVersion);
+						 
+						// end
+						nameacc = mech.getAccName();
+						uploadold=mech;
+						try {
+							if (driver != null) {
+								driver.quit();
+							}
+							
+						} catch (Exception e2) {
+							// TODO: handle exception
+						}
+						String profile = mech.getPathProfile();
+						int b = profile.lastIndexOf("\\");
+						// System.out.println(b);
+						String nameProfile = profile.substring(b + 1);
+						String urlDataur = profile.substring(0, b + 1);
+						// System.out.println(nameProfile);
+						// System.out.println(urlDataur);
+
+						ChromeOptions options = new ChromeOptions();
+
+						options.addArguments("--user-data-dir=" + urlDataur);
+						options.addArguments("--profile-directory=" + nameProfile);
+						options.addArguments("--disable-notifications");
+						options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
+						 options.addArguments("user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"+browserVersion+" Safari/537.36");
+						options.addArguments("--no-sandbox");
+						options.addArguments("start-maximized");
+						options.addArguments("--no-sandbox");
+						options.addArguments("--disable-web-security");
+						options.addArguments("--disable-blink-features=AutomationControlled");
+						options.addArguments("start-maximized");
+						// options.AddExcludedArgument("enable-automation");
+						// options.AddAdditionalCapability("useAutomationExtension", false);
+						driver = new ChromeDriver(options);
+						driver.get("https://merch.amazon.com/manage/designs");
+						Thread.sleep(20000);
+						driver.findElement(By.cssSelector("#page-size-selector")).click();
+						Thread.sleep(2000);
+						driver.findElement(By.cssSelector("#page-size-250")).click();
+						Thread.sleep(6000);
+					}
+					
+					
+					FunctionCheckSale functionCheckSale=new FunctionCheckSale();
+					functionCheckSale.deleteProduct(driver, mech);
+					
+					
+				} catch (Exception e) {
+					
+					if (driver != null) {
+						try {
+							driver.quit();
+						} catch (Exception e2) {
+							// TODO: handle exception
+						}
+
+						// driver.close();
+					}
+
+					e.printStackTrace();
+					continue;
+					// return "notok";
+
+				} finally {
+
+					
+				}
+
+			}
+			
+			
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return "notok";
+		} finally {
+			if (driver != null) {
+				try {
+					driver.quit();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+
+				// driver.close();
+			}
+			try {
+				FileWriter fw = new FileWriter("log.txt"); // the true will append the new data
+				fw.write("");// appends the string to the file
+				fw.close();
+				FileWriter fw2 = new FileWriter("log.txt"); // the true will append the new data
+				fw2.write("0");// appends the string to the file
+				fw2.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+			}
+
+		}
+
+		return "ok";
+
+	}
+
+	
+	
 	
 
 	@RequestMapping(value = "/uploadMerchMulti", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -542,6 +729,54 @@ public class CheckSaleMerch {
 				} 
 				Thread.sleep(1000);
 				rep=functionCheckSale.checkSaleListAccountString(mech, driver, browserVersion);
+				if (rep != null && rep.equalsIgnoreCase("00")) {
+					return "00";
+				}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+		}
+			 
+		return "01";
+
+	}
+	
+	@RequestMapping(value = "/checkProduct", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+	private String checkProduct(@RequestBody String req, HttpServletRequest request, HttpServletResponse resp) {
+
+		String rep = "";
+		try {
+			// Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			ObjectMapper objectMapper = new ObjectMapper();
+			AccountMerch mech = objectMapper.readValue(req, AccountMerch.class);
+			
+			try { 
+			
+				CallAPi callApi =new CallAPi();
+				FunctionCheckSale functionCheckSale=new FunctionCheckSale();
+				 rep =callApi.callAPIPost("http://45.32.101.196:8080/getallaccfromip", "");
+				
+				 WebDriverManager.chromedriver().setup();
+					ChromeOptions options2 = new ChromeOptions();
+					options2.addArguments("--headless");
+					 driver= new ChromeDriver(options2);
+					 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
+					 String browserName = caps.getBrowserName();
+					 String browserVersion = caps.getVersion();
+					 System.out.println(browserName+" "+browserVersion);
+					 driver.close();
+				try {
+					 Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+					 p.waitFor();
+					Runtime.getRuntime().exec("taskkill /F /IM CHROME.exe");
+					 p.waitFor();
+				} catch (Exception e) {
+					// TODO: handle exception
+				} 
+				Thread.sleep(1000);
+				rep=functionCheckSale.checkDesign(driver,mech,  browserVersion);
 				if (rep != null && rep.equalsIgnoreCase("00")) {
 					return "00";
 				}

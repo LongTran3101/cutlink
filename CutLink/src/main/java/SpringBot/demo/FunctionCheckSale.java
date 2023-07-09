@@ -1,9 +1,11 @@
 package SpringBot.demo;
 
+import java.io.InputStream;
 import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -17,12 +19,73 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FunctionCheckSale {
-	public void checkDesign(WebDriver driver,AccountMerch mech) {
+	public String deleteProduct(WebDriver driver,Product mech)
+	{
+		ObjectMapper objectMapper = new ObjectMapper();
+		CallAPi callApi = new CallAPi();
+		String rep = "";
 		try {
-			String rep = "";
+			driver.findElement(By.cssSelector("#search-bar")).sendKeys(mech.getTitle());
+			Thread.sleep(3000);
+			driver.findElement(By.cssSelector("#search-button")).click();
+			Thread.sleep(10000);
+			List<WebElement> listelement = driver.findElements(By.cssSelector(".table tr"));
+			for (WebElement webElement : listelement) {
+				WebElement link = webElement.findElement(By.cssSelector("a"));
+				String linkHr=link.getAttribute("href");
+				int x=linkHr.lastIndexOf("/");
+				String c=linkHr.substring(x+1);
+				if(c.equalsIgnoreCase(mech.getAsin()))
+				{
+					webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+					Thread.sleep(2000);
+					List<WebElement> listI = webElement.findElements(By.tagName("i"));
+					listI.get(1).click();
+					Thread.sleep(5000);
+					driver.findElement(By.cssSelector("#delete-button")).click();
+					Thread.sleep(3000);
+					String jsonString = objectMapper.writeValueAsString(mech);
+					rep = callApi.callAPIPost("http://45.32.101.196:8080/updateStatusProduct", jsonString);
+					continue;
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rep;
+	}
+	
+	public String checkDesign(WebDriver driver,AccountMerch mech , String browserVersion) {
+		String rep = "";
+		try {
+		
+			Thread.sleep(10000);
+			// System.out.println("a");
+			// System.out.println(mech.getDay());
+			String profile = mech.getPath();
+			int b = profile.lastIndexOf("\\");
+			// System.out.println(b);
+			String nameProfile = profile.substring(b + 1);
+			String urlDataur = profile.substring(0, b + 1);
+			System.out.println("bat dau check acc " + mech.getName());
+			ChromeOptions options = new ChromeOptions();
+			options.addArguments("--user-data-dir=" + urlDataur);
+			options.addArguments("--profile-directory=" + nameProfile);
+			options.addArguments("--disable-notifications");
+			options.setExperimentalOption("excludeSwitches", new String[] { "enable-automation" });
+			options.addArguments(
+					"user-agent=Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/"
+							+ browserVersion + " Safari/537.36");
+			options.addArguments("--no-sandbox");
+			options.addArguments("start-maximized");
+			options.addArguments("--no-sandbox");
+			options.addArguments("--disable-web-security");
+			options.addArguments("--disable-blink-features=AutomationControlled");
+			options.addArguments("start-maximized");
+			driver = new ChromeDriver(options);
 			CallAPi callApi = new CallAPi();
 			DateFormat df = new SimpleDateFormat("MM/dd/yy");
-			List<Product> lsrPro=new ArrayList<>();
+			
 			System.out.println("start get design");
 			driver.get("https://merch.amazon.com/api/ratelimiter/metadata");
 			String metaJson = driver.findElement(By.tagName("body")).getText();
@@ -46,17 +109,18 @@ public class FunctionCheckSale {
 			driver.findElement(By.cssSelector("#page-size-250")).click();
 			Thread.sleep(6000);
 			List<WebElement> listelement = driver.findElements(By.cssSelector(".table tr"));
+			List<Product> lstpro=new ArrayList<>();
 			System.out.println(listelement.size() + "-----listelement ");
 			for (WebElement webElement : listelement) {
 				WebElement link = webElement.findElement(By.cssSelector("a"));
 				WebElement img = webElement.findElement(By.cssSelector("img"));
-				List<WebElement> lstTD = driver.findElements(By.cssSelector("td"));
+				List<WebElement> lstTD = webElement.findElements(By.cssSelector("td"));
 				
 					Product pro = new Product();
 					String linkHr=link.getAttribute("href");
 					int x=linkHr.lastIndexOf("/");
-					String b=linkHr.substring(x+1);
-					pro.setAsin(b);
+					String c=linkHr.substring(x+1);
+					pro.setAsin(c);
 					pro.setAcc(mech.getId());
 					pro.setBrand(lstTD.get(2).getText());
 					pro.setMkt(lstTD.get(0).getText());
@@ -68,47 +132,70 @@ public class FunctionCheckSale {
 					pro.setPathProfile(mech.getPath());
 					pro.setTitle(link.getText());
 					pro.setUrlPreview(img.getAttribute("src"));
-					lsrPro.add(pro);
-					
-					
-//
-//				WebElement mkt = webElement.findElement(By.xpath("//td[0]"));
-//				System.out.println(mkt.getText() + " --mkt");
-//				WebElement brand = webElement.findElement(By.xpath("//td[2]"));
-//				System.out.println(brand.getText()+" --- brand");
-//				WebElement type = webElement.findElement(By.xpath("//td[3]"));
-//				System.out.println( type.getText()+" ---  type");
-//				WebElement timeCreate = webElement.findElement(By.xpath("//td[4]"));
-//				System.out.println( timeCreate.getText()+" ---  timeCreate");
-//				WebElement Price = webElement.findElement(By.xpath("//td[5]"));
-//				System.out.println( Price.getText()+" ---  Price");
-//				WebElement Status = webElement.findElement(By.xpath("//td6]"));
-//				System.out.println( Status.getText()+" ---  Status");
+					pro.setUsername(mech.getUsername());
+					pro.setAccName(mech.getName());
+					lstpro.add(pro);
 
 			}
-			
-			ListPoductDTO listPoductDTO=new ListPoductDTO();
-			listPoductDTO.setList(lsrPro);
-			String jsonString = objectMapper.writeValueAsString(listPoductDTO);
-			rep = callApi.callAPIPost("http://45.32.101.196:8080/saveProduct", jsonString);
-			
-		
-//			System.out.println( lsrPro.get(0).getMkt()+ " --mkt");
-//			
-//			System.out.println(lsrPro.get(0).getBrand()+" --- brand");
-//		
-//			System.out.println( lsrPro.get(0).getTypeProduct()+" ---  type");
-//			
-//			System.out.println(lsrPro.get(0).getCreateDate().toString()+" ---  timeCreate");
-//			
-//			System.out.println( lsrPro.get(0).getPrice()+" ---  Price");
-//			
-//			System.out.println( lsrPro.get(0).getStatus()+" ---  Status");
+			for (int i = 0; i <count; i++) {
+				driver.findElement(By.cssSelector(".sci-chevron-right")).click();
+				Thread.sleep(5000);
+				List<WebElement> listelements = driver.findElements(By.cssSelector(".table tr"));
+				System.out.println(listelement.size() + "-----listelement ");
+				for (WebElement webElement : listelements) {
+					WebElement link = webElement.findElement(By.cssSelector("a"));
+					WebElement img = webElement.findElement(By.cssSelector("img"));
+					List<WebElement> lstTD = webElement.findElements(By.cssSelector("td"));
+						Product pro = new Product();
+						String linkHr=link.getAttribute("href");
+						int x=linkHr.lastIndexOf("/");
+						String c=linkHr.substring(x+1);
+						pro.setAsin(c);
+						pro.setAcc(mech.getId());
+						pro.setBrand(lstTD.get(2).getText());
+						pro.setMkt(lstTD.get(0).getText());
+						pro.setTypeProduct(lstTD.get(3).getText());
+						pro.setCreateDate(df.parse(lstTD.get(4).getText()));
+						pro.setPrice(lstTD.get(5).getText());
+						pro.setStatus(lstTD.get(6).getText());
+						pro.setIp(mech.getIp());
+						pro.setPathProfile(mech.getPath());
+						pro.setTitle(link.getText());
+						pro.setUrlPreview(img.getAttribute("src"));
+						pro.setUsername(mech.getUsername());
+						pro.setAccName(mech.getName());
+						lstpro.add(pro);
+						
 
+				}
+			}
+			ListPoductDTO dtoRq=new ListPoductDTO();
+			dtoRq.setList(lstpro);
+			String jsonString = objectMapper.writeValueAsString(dtoRq);
+			rep = callApi.callAPIPost("http://45.32.101.196:8080/saveProduct", jsonString);
+			rep="00";
 		} catch (Exception e) {
 			System.out.println("Loi lay list design");
 			e.printStackTrace();
+		}finally {
+			if (driver != null) {
+				try {
+					driver.quit();
+				} catch (Exception e2) {
+					// TODO: handle exception
+				}
+
+			}
+			try {
+				Process p = Runtime.getRuntime().exec("taskkill /F /IM ChromeDriver.exe");
+				p.waitFor();
+				Runtime.getRuntime().exec("taskkill /F /IM CHROME.exe");
+				p.waitFor();
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 		}
+		return rep;
 
 	}
 
@@ -467,7 +554,7 @@ public class FunctionCheckSale {
 			options.addArguments("--disable-blink-features=AutomationControlled");
 			options.addArguments("start-maximized");
 			driver = new ChromeDriver(options);
-			checkDesign(driver,mech);
+			//checkDesign(driver,mech);
 
 			driver.get("https://merch.amazon.com/dashboard");
 			Thread.sleep(70000);
