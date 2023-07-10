@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -25,7 +26,10 @@ public class FunctionCheckSale {
 		CallAPi callApi = new CallAPi();
 		String rep = "";
 		try {
-			driver.findElement(By.cssSelector("#search-bar")).sendKeys(mech.getTitle());
+			WebElement serBar=driver.findElement(By.cssSelector("#search-bar"));
+			serBar.sendKeys(Keys.CONTROL + "a");
+			serBar.sendKeys(Keys.DELETE);
+			serBar.sendKeys(mech.getTitle());
 			Thread.sleep(3000);
 			driver.findElement(By.cssSelector("#search-button")).click();
 			Thread.sleep(10000);

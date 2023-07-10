@@ -15,15 +15,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class Maintesst {
 	public static void main(String[] args) {
-		try {
-			String json="[{\"id\":1034848,\"acc\":82,\"asin\":\"B0BJ66H53F\",\"urlPreview\":\"https://zme-caps.amazon.com/asset/CSE/gear/baa6/71eda6d1-fd9e-4607-b243-dc70216da0d5_STANDARD_TSHIRT/SHIRT_ART_IMAGE_THUMBNAIL?versionId=1&awsClient=ApolloEnv%3AMerchDesignerWebApp%2FNA%2FProd&urlMethod=GET&expires=1688884349535&requestId=841eb913-c86f-4b8b-b61a-67b4ad1ab15e&sig=bd12d8f640293bde86043f0053c5a925e1d920c8eff2ece3bad18453364f6766&serial=21\",\"title\":\"English Grammar Police Funny Sarcasm Quotes Literary\",\"brand\":\"100 Days Smarter Hoodie 100th Day Of School Gift\",\"createDate\":1676566800000,\"userDelete\":null,\"dayUpdate\":1688835600000,\"username\":\"longtn\",\"pathProfile\":\"C:\\\\Users\\\\Administrator\\\\AppData\\\\Local\\\\Google\\\\Chrome\\\\User Data\\\\Profile 2\",\"typeProduct\":\"Standard t-shirt\",\"price\":\"JPY 2,000\",\"status\":\"Auto-uploaded\",\"accName\":\"merch 18 - jamyasemasen@gmail.com\",\"base64\":null,\"ip\":\"108.61.87.181\",\"mkt\":\".co.jp\",\"bobImage\":null}]";
-			ObjectMapper objectMapper = new ObjectMapper();
-			List<Product> mechlst = objectMapper.readValue(json, new TypeReference<List<Product>>() {
-			});
-			System.out.println(mechlst.size());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
+		
+		int startPosition = 2 * 250 - 250;
+		int maxResult = 2 * 250;
+		System.out.println(startPosition);
+		System.out.println(maxResult);
+//		try {
+//			String json="[{\"id\":1034848,\"acc\":82,\"asin\":\"B0BJ66H53F\",\"urlPreview\":\"https://zme-caps.amazon.com/asset/CSE/gear/baa6/71eda6d1-fd9e-4607-b243-dc70216da0d5_STANDARD_TSHIRT/SHIRT_ART_IMAGE_THUMBNAIL?versionId=1&awsClient=ApolloEnv%3AMerchDesignerWebApp%2FNA%2FProd&urlMethod=GET&expires=1688884349535&requestId=841eb913-c86f-4b8b-b61a-67b4ad1ab15e&sig=bd12d8f640293bde86043f0053c5a925e1d920c8eff2ece3bad18453364f6766&serial=21\",\"title\":\"English Grammar Police Funny Sarcasm Quotes Literary\",\"brand\":\"100 Days Smarter Hoodie 100th Day Of School Gift\",\"createDate\":1676566800000,\"userDelete\":null,\"dayUpdate\":1688835600000,\"username\":\"longtn\",\"pathProfile\":\"C:\\\\Users\\\\Administrator\\\\AppData\\\\Local\\\\Google\\\\Chrome\\\\User Data\\\\Profile 2\",\"typeProduct\":\"Standard t-shirt\",\"price\":\"JPY 2,000\",\"status\":\"Auto-uploaded\",\"accName\":\"merch 18 - jamyasemasen@gmail.com\",\"base64\":null,\"ip\":\"108.61.87.181\",\"mkt\":\".co.jp\",\"bobImage\":null}]";
+//			ObjectMapper objectMapper = new ObjectMapper();
+//			List<Product> mechlst = objectMapper.readValue(json, new TypeReference<List<Product>>() {
+//			});
+//			System.out.println(mechlst.size());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
 		
 //		String json="{\"APJ6JRA9NG5V4\":{\"unitsSold\":0,\"unitsCancelled\":0,\"unitsReturned\":0,\"revenueExclTax\":{\"value\":0,\"code\":\"EUR\"},\"royalties\":{\"value\":0,\"code\":\"EUR\"},\"revenue\":{\"value\":0,\"code\":\"EUR\"}},\"A13V1IB3VIYZZH\":{\"unitsSold\":0,\"unitsCancelled\":0,\"unitsReturned\":0,\"revenueExclTax\":{\"value\":0,\"code\":\"EUR\"},\"royalties\":{\"value\":0,\"code\":\"EUR\"},\"revenue\":{\"value\":0,\"code\":\"EUR\"}},\"A1RKKUPIHCS9HS\":{\"unitsSold\":0,\"unitsCancelled\":0,\"unitsReturned\":0,\"revenueExclTax\":{\"value\":0,\"code\":\"EUR\"},\"royalties\":{\"value\":0,\"code\":\"EUR\"},\"revenue\":{\"value\":0,\"code\":\"EUR\"}},\"A1VC38T7YXB528\":{\"unitsSold\":0,\"unitsCancelled\":0,\"unitsReturned\":0,\"revenueExclTax\":{\"value\":0,\"code\":\"JPY\"},\"royalties\":{\"value\":0,\"code\":\"JPY\"},\"revenue\":{\"value\":0,\"code\":\"JPY\"}},\"A1F83G8C2ARO7P\":{\"unitsSold\":0,\"unitsCancelled\":0,\"unitsReturned\":0,\"revenueExclTax\":{\"value\":0,\"code\":\"GBP\"},\"royalties\":{\"value\":0,\"code\":\"GBP\"},\"revenue\":{\"value\":0,\"code\":\"GBP\"}},\"A1PA6795UKMFR9\":{\"unitsSold\":0,\"unitsCancelled\":0,\"unitsReturned\":0,\"revenueExclTax\":{\"value\":0,\"code\":\"EUR\"},\"royalties\":{\"value\":0,\"code\":\"EUR\"},\"revenue\":{\"value\":0,\"code\":\"EUR\"}},\"ATVPDKIKX0DER\":{\"unitsSold\":2,\"unitsCancelled\":0,\"unitsReturned\":0,\"revenueExclTax\":{\"value\":35.98,\"code\":\"USD\"},\"royalties\":{\"value\":5.53,\"code\":\"USD\"},\"revenue\":{\"value\":35.98,\"code\":\"USD\"}}}";
 //		
