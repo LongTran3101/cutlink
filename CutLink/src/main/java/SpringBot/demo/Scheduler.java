@@ -75,6 +75,8 @@ public class Scheduler {
 			} 
 			Thread.sleep(1000);
 			functionCheckSale.checkSaleListAccount(mechlst, driver, browserVersion);
+			
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

@@ -157,10 +157,7 @@ public class CheckSaleMerch {
 						driver = new ChromeDriver(options);
 						driver.get("https://merch.amazon.com/manage/designs");
 						Thread.sleep(20000);
-						driver.findElement(By.cssSelector("#page-size-selector")).click();
-						Thread.sleep(2000);
-						driver.findElement(By.cssSelector("#page-size-250")).click();
-						Thread.sleep(6000);
+						
 						
 					}
 					if (!mech.getAccName().toLowerCase().equalsIgnoreCase(nameacc.toLowerCase()) ) {
@@ -210,10 +207,7 @@ public class CheckSaleMerch {
 						driver = new ChromeDriver(options);
 						driver.get("https://merch.amazon.com/manage/designs");
 						Thread.sleep(20000);
-						driver.findElement(By.cssSelector("#page-size-selector")).click();
-						Thread.sleep(2000);
-						driver.findElement(By.cssSelector("#page-size-250")).click();
-						Thread.sleep(6000);
+						
 					}
 					
 					
