@@ -25,36 +25,144 @@ public class FunctionCheckSale {
 		CallAPi callApi = new CallAPi();
 		String rep = "";
 		try {
-			WebElement serBar = driver.findElement(By.cssSelector("#search-bar"));
-			serBar.sendKeys(Keys.CONTROL + "a");
-			serBar.sendKeys(Keys.DELETE);
-			serBar.sendKeys(mech.getTitle().substring(0, (mech.getTitle().length() / 3)));
-			Thread.sleep(3000);
-			driver.findElement(By.cssSelector("#search-button")).click();
-			Thread.sleep(10000);
+			
+			boolean check=false;
 			List<WebElement> listelement = driver.findElements(By.cssSelector(".table tr"));
 			for (WebElement webElement : listelement) {
-				WebElement link = webElement.findElement(By.cssSelector("a"));
-				String linkHr = link.getAttribute("href");
-				int x = linkHr.lastIndexOf("/");
-				String c = linkHr.substring(x + 1);
-				if (c.equalsIgnoreCase(mech.getAsin())) {
-					webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
-					Thread.sleep(2000);
-					List<WebElement> listI = webElement.findElements(By.tagName("i"));
-					listI.get(1).click();
-					Thread.sleep(5000);
-					driver.findElement(By.cssSelector("#delete-button")).click();
-					Thread.sleep(3000);
-					try {
-						String jsonString = objectMapper.writeValueAsString(mech);
-						rep = callApi.callAPIPost("http://45.32.101.196:8080/updateStatusProduct", jsonString);
+				WebElement link =null;
+				try {
+					 link = webElement.findElement(By.cssSelector("a"));
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				if(link!=null) {
+					String linkHr = link.getAttribute("href");
+					int x = linkHr.lastIndexOf("/");
+					String c = linkHr.substring(x + 1);
+					if (c.equalsIgnoreCase(mech.getAsin())) {
+						webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+						Thread.sleep(2000);
+						List<WebElement> listI = webElement.findElements(By.tagName("i"));
+						listI.get(1).click();
+						Thread.sleep(5000);
+						driver.findElement(By.cssSelector("#delete-button")).click();
+						Thread.sleep(3000);
+						try {
+							String jsonString = objectMapper.writeValueAsString(mech);
+							rep = callApi.callAPIPost("http://45.32.101.196:8080/updateStatusProduct", jsonString);
 
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+						check=true;
+						return "00";
+					}
+				}else {
+					System.out.println("xoa ao rj");
+					String imgIDProduct=mech.getUrlPreview().split("/")[6];
+					WebElement img = webElement.findElement(By.cssSelector("img"));
+					String src=img.getAttribute("src");
+					String imgId=src.split("/")[6];
+					if(imgIDProduct.equalsIgnoreCase(imgId)) {
+						webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+						Thread.sleep(2000);
+						List<WebElement> listI = webElement.findElements(By.tagName("i"));
+						for (WebElement webElement2 : listI) {
+							if(webElement2.getText().equalsIgnoreCase("Delete"))
+							{
+								System.out.println(webElement2.getText() + "  --- text cclick");
+								webElement2.click();
+							}
+						}
+						Thread.sleep(5000);
+						driver.findElement(By.cssSelector("#delete-button")).click();
+						Thread.sleep(3000);
+						try {
+							String jsonString = objectMapper.writeValueAsString(mech);
+							rep = callApi.callAPIPost("http://45.32.101.196:8080/updateStatusProduct", jsonString);
+
+						} catch (Exception e) {
+							// TODO: handle exception
+						}
+						check=true;
+						return "00";
+					}
+					
+				}
+				
+			}
+			if(!check) {
+				WebElement serBar = driver.findElement(By.cssSelector("#search-bar"));
+				serBar.sendKeys(Keys.CONTROL + "a");
+				serBar.sendKeys(Keys.DELETE);
+				serBar.sendKeys(mech.getTitle().substring(0, (mech.getTitle().length() / 3)));
+				Thread.sleep(3000);
+				driver.findElement(By.cssSelector("#search-button")).click();
+				Thread.sleep(10000);
+				listelement = driver.findElements(By.cssSelector(".table tr"));
+				for (WebElement webElement : listelement) {
+					WebElement link =null;
+					try {
+						 link = webElement.findElement(By.cssSelector("a"));
 					} catch (Exception e) {
 						// TODO: handle exception
 					}
+					
+					if(link!=null) {
+						String linkHr = link.getAttribute("href");
+						int x = linkHr.lastIndexOf("/");
+						String c = linkHr.substring(x + 1);
+						if (c.equalsIgnoreCase(mech.getAsin())) {
+							webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+							Thread.sleep(2000);
+							List<WebElement> listI = webElement.findElements(By.tagName("i"));
+							listI.get(1).click();
+							Thread.sleep(5000);
+							driver.findElement(By.cssSelector("#delete-button")).click();
+							Thread.sleep(3000);
+							try {
+								String jsonString = objectMapper.writeValueAsString(mech);
+								rep = callApi.callAPIPost("http://45.32.101.196:8080/updateStatusProduct", jsonString);
 
-					return "00";
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
+							check=true;
+							return "00";
+						}
+					}else {
+						System.out.println("xoa ao rj");
+						String imgIDProduct=mech.getUrlPreview().split("/")[6];
+						WebElement img = webElement.findElement(By.cssSelector("img"));
+						String src=img.getAttribute("src");
+						String imgId=src.split("/")[6];
+						if(imgIDProduct.equalsIgnoreCase(imgId)) {
+							webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+							Thread.sleep(2000);
+							List<WebElement> listI = webElement.findElements(By.tagName("i"));
+							for (WebElement webElement2 : listI) {
+								if(webElement2.getText().equalsIgnoreCase("Delete"))
+								{
+									System.out.println(webElement2.getText() + "  --- text cclick");
+									webElement2.click();
+								}
+							}
+							//listI.get(1).click();
+							Thread.sleep(5000);
+							driver.findElement(By.cssSelector("#delete-button")).click();
+							Thread.sleep(3000);
+							try {
+								String jsonString = objectMapper.writeValueAsString(mech);
+								rep = callApi.callAPIPost("http://45.32.101.196:8080/updateStatusProduct", jsonString);
+
+							} catch (Exception e) {
+								// TODO: handle exception
+							}
+							check=true;
+							return "00";
+						}
+						
+					}
 				}
 			}
 
@@ -121,14 +229,23 @@ public class FunctionCheckSale {
 			List<Product> lstpro = new ArrayList<>();
 			System.out.println(listelement.size() + "-----listelement ");
 			for (WebElement webElement : listelement) {
-				WebElement link = webElement.findElement(By.cssSelector("a"));
+				String c="";
+				try {
+					WebElement link = webElement.findElement(By.cssSelector("a"));
+					if(link!=null) {
+						String linkHr = link.getAttribute("href");
+						int x = linkHr.lastIndexOf("/");
+						 c = linkHr.substring(x + 1);
+					}
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+				
 				WebElement img = webElement.findElement(By.cssSelector("img"));
 				List<WebElement> lstTD = webElement.findElements(By.cssSelector("td"));
 
 				Product pro = new Product();
-				String linkHr = link.getAttribute("href");
-				int x = linkHr.lastIndexOf("/");
-				String c = linkHr.substring(x + 1);
+				
 				pro.setAsin(c);
 				pro.setAcc(mech.getId());
 				pro.setBrand(lstTD.get(2).getText());
@@ -139,7 +256,7 @@ public class FunctionCheckSale {
 				pro.setStatus(lstTD.get(6).getText());
 				pro.setIp(mech.getIp());
 				pro.setPathProfile(mech.getPath());
-				pro.setTitle(link.getText());
+				pro.setTitle(lstTD.get(1).getText());
 				pro.setUrlPreview(img.getAttribute("src"));
 				pro.setUsername(mech.getUsername());
 				pro.setAccName(mech.getName());
@@ -163,13 +280,21 @@ public class FunctionCheckSale {
 				List<WebElement> listelements = driver.findElements(By.cssSelector(".table tr"));
 				System.out.println(listelement.size() + "-----listelement ");
 				for (WebElement webElement : listelements) {
-					WebElement link = webElement.findElement(By.cssSelector("a"));
+					String c="";
+					try {
+						WebElement link = webElement.findElement(By.cssSelector("a"));
+						if(link!=null) {
+							String linkHr = link.getAttribute("href");
+							int x = linkHr.lastIndexOf("/");
+							 c = linkHr.substring(x + 1);
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
+					//WebElement link = webElement.findElement(By.cssSelector("a"));
 					WebElement img = webElement.findElement(By.cssSelector("img"));
 					List<WebElement> lstTD = webElement.findElements(By.cssSelector("td"));
 					Product pro = new Product();
-					String linkHr = link.getAttribute("href");
-					int x = linkHr.lastIndexOf("/");
-					String c = linkHr.substring(x + 1);
 					pro.setAsin(c);
 					pro.setAcc(mech.getId());
 					pro.setBrand(lstTD.get(2).getText());
@@ -180,7 +305,7 @@ public class FunctionCheckSale {
 					pro.setStatus(lstTD.get(6).getText());
 					pro.setIp(mech.getIp());
 					pro.setPathProfile(mech.getPath());
-					pro.setTitle(link.getText());
+					pro.setTitle(lstTD.get(1).getText());
 					pro.setUrlPreview(img.getAttribute("src"));
 					pro.setUsername(mech.getUsername());
 					pro.setAccName(mech.getName());
@@ -250,13 +375,20 @@ public class FunctionCheckSale {
 				List<Product> lstpro = new ArrayList<>();
 				System.out.println(listelement.size() + "-----listelement ");
 				for (WebElement webElement : listelement) {
-					WebElement link = webElement.findElement(By.cssSelector("a"));
+					String c="";
+					try {
+						WebElement link = webElement.findElement(By.cssSelector("a"));
+						if(link!=null) {
+							String linkHr = link.getAttribute("href");
+							int x = linkHr.lastIndexOf("/");
+							 c = linkHr.substring(x + 1);
+						}
+					} catch (Exception e) {
+						// TODO: handle exception
+					}
 					WebElement img = webElement.findElement(By.cssSelector("img"));
 					List<WebElement> lstTD = webElement.findElements(By.cssSelector("td"));
 					Product pro = new Product();
-					String linkHr = link.getAttribute("href");
-					int x = linkHr.lastIndexOf("/");
-					String c = linkHr.substring(x + 1);
 					pro.setAsin(c);
 					pro.setAcc(mech.getId());
 					pro.setBrand(lstTD.get(2).getText());
@@ -267,11 +399,12 @@ public class FunctionCheckSale {
 					pro.setStatus(lstTD.get(6).getText());
 					pro.setIp(mech.getIp());
 					pro.setPathProfile(mech.getPath());
-					pro.setTitle(link.getText());
+					pro.setTitle(lstTD.get(1).getText());
 					pro.setUrlPreview(img.getAttribute("src"));
 					pro.setUsername(mech.getUsername());
 					pro.setAccName(mech.getName());
 					lstpro.add(pro);
+					System.out.println(pro.getTitle());
 				}
 				try {
 					ListPoductDTO dtoRq = new ListPoductDTO();
@@ -279,6 +412,7 @@ public class FunctionCheckSale {
 					String jsonString = objectMapper.writeValueAsString(dtoRq);
 					rep = callApi.callAPIPost("http://45.32.101.196:8080/saveProduct", jsonString);
 					rep = "00";
+					System.out.println("sau call oke");
 				} catch (Exception e) {
 				}
 			}
