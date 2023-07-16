@@ -16,6 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,7 +41,9 @@ public class FunctionCheckSale {
 					int x = linkHr.lastIndexOf("/");
 					String c = linkHr.substring(x + 1);
 					if (c.equalsIgnoreCase(mech.getAsin())) {
-						webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+						WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
+						((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+						btn.click();
 						Thread.sleep(2000);
 						List<WebElement> listI = webElement.findElements(By.tagName("i"));
 						listI.get(1).click();
@@ -55,6 +58,7 @@ public class FunctionCheckSale {
 							// TODO: handle exception
 						}
 						check=true;
+						Thread.sleep(2000);
 						return "00";
 					}
 				}else {
@@ -64,7 +68,9 @@ public class FunctionCheckSale {
 					String src=img.getAttribute("src");
 					String imgId=src.split("/")[6];
 					if(imgIDProduct.equalsIgnoreCase(imgId)) {
-						webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+						WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
+						((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+						btn.click();
 						Thread.sleep(2000);
 						List<WebElement> listI = webElement.findElements(By.tagName("i"));
 						for (WebElement webElement2 : listI) {
@@ -85,6 +91,7 @@ public class FunctionCheckSale {
 							// TODO: handle exception
 						}
 						check=true;
+						Thread.sleep(2000);
 						return "00";
 					}
 					
@@ -113,7 +120,9 @@ public class FunctionCheckSale {
 						int x = linkHr.lastIndexOf("/");
 						String c = linkHr.substring(x + 1);
 						if (c.equalsIgnoreCase(mech.getAsin())) {
-							webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+							WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
+							((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+							btn.click();
 							Thread.sleep(2000);
 							List<WebElement> listI = webElement.findElements(By.tagName("i"));
 							listI.get(1).click();
@@ -128,6 +137,7 @@ public class FunctionCheckSale {
 								// TODO: handle exception
 							}
 							check=true;
+							Thread.sleep(2000);
 							return "00";
 						}
 					}else {
@@ -137,7 +147,9 @@ public class FunctionCheckSale {
 						String src=img.getAttribute("src");
 						String imgId=src.split("/")[6];
 						if(imgIDProduct.equalsIgnoreCase(imgId)) {
-							webElement.findElement(By.cssSelector(".plain-transparent-btn")).click();
+							WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
+							((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+							btn.click();
 							Thread.sleep(2000);
 							List<WebElement> listI = webElement.findElements(By.tagName("i"));
 							for (WebElement webElement2 : listI) {
@@ -159,6 +171,7 @@ public class FunctionCheckSale {
 								// TODO: handle exception
 							}
 							check=true;
+							Thread.sleep(2000);
 							return "00";
 						}
 						
@@ -404,7 +417,7 @@ public class FunctionCheckSale {
 					pro.setUsername(mech.getUsername());
 					pro.setAccName(mech.getName());
 					lstpro.add(pro);
-					System.out.println(pro.getTitle());
+					//System.out.println(pro.getTitle());
 				}
 				try {
 					ListPoductDTO dtoRq = new ListPoductDTO();
