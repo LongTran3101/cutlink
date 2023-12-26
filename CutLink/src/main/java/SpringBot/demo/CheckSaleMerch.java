@@ -7,21 +7,12 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.InputStream;
 import java.net.URL;
-import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.Duration;
 import java.util.List;
-import java.util.Scanner;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 
-import org.apache.tomcat.util.http.fileupload.FileUpload;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.JavascriptExecutor;
@@ -30,22 +21,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.http.MediaType;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -61,7 +46,7 @@ public class CheckSaleMerch {
 		 driver= new ChromeDriver(options2);
 		 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
 		 String browserName = caps.getBrowserName();
-		 String browserVersion = caps.getVersion();
+		 String browserVersion = caps.getBrowserVersion();
 		 System.out.println(browserName+" "+browserVersion);
 		 driver.close();
 		 ChromeOptions options = new ChromeOptions();
@@ -109,7 +94,7 @@ public class CheckSaleMerch {
 			 driver= new ChromeDriver(options2);
 			 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
 			 String browserName = caps.getBrowserName();
-			 String browserVersion = caps.getVersion();
+			 String browserVersion = caps.getBrowserVersion();
 			 System.out.println(browserName+" "+browserVersion);
 			 driver.close();
 			//WebDriverManager.chromedriver().
@@ -292,7 +277,7 @@ public class CheckSaleMerch {
 			 driver= new ChromeDriver(options2);
 			 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
 			 String browserName = caps.getBrowserName();
-			 String browserVersion = caps.getVersion();
+			 String browserVersion = caps.getBrowserVersion();
 			 System.out.println(browserName+" "+browserVersion);
 			 driver.close();
 			//WebDriverManager.chromedriver().
@@ -426,7 +411,7 @@ public class CheckSaleMerch {
 					}
 
 					
-					WebDriverWait wait = new WebDriverWait(driver, 20);
+					WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
 					driver.get("https://merch.amazon.com/designs/new");
 					Thread.sleep(20000);
 					
@@ -710,7 +695,7 @@ public class CheckSaleMerch {
 					 driver= new ChromeDriver(options2);
 					 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
 					 String browserName = caps.getBrowserName();
-					 String browserVersion = caps.getVersion();
+					 String browserVersion = caps.getBrowserVersion();
 					 System.out.println(browserName+" "+browserVersion);
 					 driver.close();
 				try {
@@ -758,7 +743,7 @@ public class CheckSaleMerch {
 					 driver= new ChromeDriver(options2);
 					 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
 					 String browserName = caps.getBrowserName();
-					 String browserVersion = caps.getVersion();
+					 String browserVersion = caps.getBrowserVersion();
 					 System.out.println(browserName+" "+browserVersion);
 					 driver.close();
 				try {

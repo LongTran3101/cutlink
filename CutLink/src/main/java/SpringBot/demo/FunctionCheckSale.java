@@ -11,17 +11,18 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class FunctionCheckSale {
 	public String deleteProduct(WebDriver driver, Product mech) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
 		ObjectMapper objectMapper = new ObjectMapper();
 		CallAPi callApi = new CallAPi();
 		String rep = "";
@@ -43,7 +44,7 @@ public class FunctionCheckSale {
 						String c = linkHr.substring(x + 1);
 						if (c.equalsIgnoreCase(mech.getAsin())) {
 							WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
-							((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+							js.executeScript("arguments[0].scrollIntoView(true);", btn);
 							btn.click();
 							Thread.sleep(2000);
 							List<WebElement> listI = webElement.findElements(By.tagName("i"));
@@ -70,7 +71,7 @@ public class FunctionCheckSale {
 						String imgId = src.split("/")[6];
 						if (imgIDProduct.equalsIgnoreCase(imgId)) {
 							WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
-							((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+							js.executeScript("arguments[0].scrollIntoView(true);", btn);
 							btn.click();
 							Thread.sleep(2000);
 							List<WebElement> listI = webElement.findElements(By.tagName("i"));
@@ -126,7 +127,7 @@ public class FunctionCheckSale {
 						String c = linkHr.substring(x + 1);
 						if (c.equalsIgnoreCase(mech.getAsin())) {
 							WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
-							((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+							js.executeScript("arguments[0].scrollIntoView(true);", btn);
 							btn.click();
 							Thread.sleep(2000);
 							List<WebElement> listI = webElement.findElements(By.tagName("i"));
@@ -153,7 +154,7 @@ public class FunctionCheckSale {
 						String imgId = src.split("/")[6];
 						if (imgIDProduct.equalsIgnoreCase(imgId)) {
 							WebElement btn = webElement.findElement(By.cssSelector(".plain-transparent-btn"));
-							((RemoteWebDriver) driver).executeScript("arguments[0].scrollIntoView(true);", btn);
+							js.executeScript("arguments[0].scrollIntoView(true);", btn);
 							btn.click();
 							Thread.sleep(2000);
 							List<WebElement> listI = webElement.findElements(By.tagName("i"));

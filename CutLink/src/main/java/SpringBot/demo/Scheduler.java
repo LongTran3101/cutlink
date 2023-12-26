@@ -1,23 +1,14 @@
 package SpringBot.demo;
 
 import java.io.File;
-import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -61,7 +52,7 @@ public class Scheduler {
 				 driver= new ChromeDriver(options2);
 				 Capabilities caps = ((RemoteWebDriver) driver).getCapabilities();
 				 String browserName = caps.getBrowserName();
-				 String browserVersion = caps.getVersion();
+				 String browserVersion = caps.getBrowserVersion();
 				 System.out.println(browserName+" "+browserVersion);
 				 driver.close();
 			System.out.println(mechlst.size());
